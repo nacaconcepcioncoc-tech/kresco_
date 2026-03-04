@@ -1,0 +1,1182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRES PRESENTS - Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
+                        url("{% static 'images/background-flowers.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 97%;
+            max-width: 1500px;
+            z-index: 1000;
+            background: rgba(103, 133, 182, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 3.5rem;
+            display: flex;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .logo-img-container {
+            width: 50px; height: 50px;
+            background-color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; overflow: hidden; border: 2px solid white;
+        }
+        .logo-img { width: 118%; height: 118%; object-fit: cover; }
+        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-menu { display: flex; list-style: none; gap: 0rem; align-items: center; }
+       
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: inline-block;
+        }
+
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+       
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* --- FLORAL BACKGROUND --- */
+        .floral-bg {
+            position: fixed;
+            opacity: 0.08;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floral-bg.left {
+            left: -100px;
+            top: 100px;
+            width: 400px;
+            height: 400px;
+            background: url("{% static 'images/background-flowers.jpg' %}");
+            background-size: cover;
+        }
+
+        .floral-bg.right {
+            right: -50px;
+            top: 400px;
+            width: 300px;
+            height: 300px;
+            background: url("{% static 'images/background-flowers.jpg' %}");
+            background-size: cover;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            padding: 100px 3rem 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 80px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* --- FORM SECTION --- */
+        .form-section {
+            background: white;
+            padding: 35px 40px;
+            border-radius: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-section .section-title {
+            font-size: 2rem;
+            color: #4a7ba8;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .form-section form {
+            display: none;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            padding: 25px 0;
+            max-width: 600px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #e0e0e0;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-item:hover {
+            transform: scale(0.95);
+            border-color: #2a6fbf;
+        }
+
+        .contact-info-item .info-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 6px rgba(0, 210, 255, 0.4));
+        }
+
+        .contact-info-item h4 {
+            font-size: 1rem;
+            color: #000000;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+        }
+
+        .contact-info-item p {
+            font-size: 0.85rem;
+            color: #000000;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #999;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            border-color: #00d2ff;
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3);
+        }
+
+        /* --- INFO SECTION --- */
+        .info-section {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-section .section-title {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .social-subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .social-btn.facebook {
+            background: #1877F2;
+        }
+
+        .social-btn.facebook:hover {
+            background: #165dce;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(24, 119, 242, 0.3);
+        }
+
+        .social-btn.instagram {
+            background: linear-gradient(135deg, #F58529 0%, #DD2A7B 50%, #8134AF 100%);
+        }
+
+        .social-btn.instagram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(245, 133, 41, 0.4);
+        }
+
+        .social-btn.tiktok {
+            background: #000000;
+        }
+
+        .social-btn.tiktok:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-cards {
+            display: none;
+        }
+
+        .icon-circle svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            padding: 0;
+            border-radius: 0;
+            margin: 0;
+            text-align: center;
+            display: none;
+        }
+
+        .section-header h2 {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .info-section .section-title {
+            font-size: 2rem;
+            color: #4a7ba8;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .info-content {
+            display: none;
+        }
+
+        .icon-circle svg {
+            display: none;
+        }
+
+        .icon-circle {
+            display: none;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1200px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo-text {
+                font-size: 0.95rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            /* ── MOBILE CONTACT PAGE FIXES ── */
+
+            /* Tighten overall wrapper */
+            .content-wrapper {
+                padding: 90px 14px 60px !important;
+            }
+
+            /* Page title — smaller, tighter */
+            .page-title {
+                font-size: 1.75rem !important;
+                margin-bottom: 12px !important;
+                line-height: 1.3 !important;
+                font-weight: 800 !important;
+            }
+
+            /* Subtitle — compact */
+            .page-subtitle {
+                font-size: 0.9rem !important;
+                margin-bottom: 35px !important;
+                line-height: 1.6 !important;
+            }
+            .page-subtitle br { display: none !important; }
+
+            /* Stack both cards with even gap */
+            .contact-container {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+
+            /* GET IN TOUCH card */
+            .form-section {
+                padding: 28px 18px 24px !important;
+                border-radius: 18px !important;
+                background: rgba(255, 255, 255, 0.98) !important;
+            }
+
+            .form-section .section-title {
+                font-size: 1.35rem !important;
+                margin-bottom: 22px !important;
+                font-weight: 700 !important;
+            }
+
+            /* Contact info grid — tighter */
+            .contact-info-grid {
+                gap: 14px !important;
+                padding: 0 !important;
+            }
+
+            .contact-info-item {
+                padding: 16px 14px !important;
+                border-radius: 12px !important;
+                gap: 12px !important;
+                background: rgba(255, 255, 255, 0.08) !important;
+                border: 1.5px solid #e8e8e8 !important;
+            }
+
+            .contact-info-item:hover {
+                transform: translateY(-2px) !important;
+                border-color: #3a7bd5 !important;
+            }
+
+            .contact-info-item h4 {
+                font-size: 0.92rem !important;
+                margin-bottom: 4px !important;
+                font-weight: 700 !important;
+                color: #333 !important;
+            }
+
+            .contact-info-item p {
+                font-size: 0.8rem !important;
+                line-height: 1.5 !important;
+                color: #555 !important;
+            }
+
+            .contact-info-item .info-icon {
+                font-size: 1.3rem !important;
+                width: 32px !important;
+                height: 32px !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* CONNECT WITH US card */
+            .info-section {
+                padding: 28px 18px 24px !important;
+                border-radius: 18px !important;
+                background: rgba(255, 255, 255, 0.98) !important;
+            }
+
+            .info-section .section-title {
+                font-size: 1.35rem !important;
+                margin-bottom: 8px !important;
+                font-weight: 700 !important;
+            }
+
+            .social-subtitle {
+                font-size: 0.82rem !important;
+                margin-bottom: 20px !important;
+                color: #666 !important;
+            }
+
+            /* Social buttons — compact */
+            .social-buttons {
+                gap: 11px !important;
+                margin-bottom: 22px !important;
+            }
+
+            .social-btn {
+                padding: 13px 16px !important;
+                font-size: 0.88rem !important;
+                border-radius: 10px !important;
+                font-weight: 600 !important;
+                transition: all 0.25s ease !important;
+            }
+
+            .social-btn:hover {
+                transform: translateY(-2px) !important;
+            }
+
+            /* Map — slightly shorter on mobile */
+            .map-container {
+                height: 240px !important;
+                margin-top: 20px !important;
+                border-radius: 12px !important;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .section-title {
+                font-size: 1.35rem;
+            }
+        }
+
+        /* ── HAMBURGER BUTTON ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 1200;
+            flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.35s ease;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+        /* ── OVERLAY ── */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 1050;
+        }
+        .mobile-overlay.open { display: block; }
+
+        /* ── SIDE DRAWER ── */
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 270px;
+            height: 100%;
+            background: rgba(20, 40, 90, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            padding: 80px 24px 40px;
+            transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -4px 0 30px rgba(0,0,0,0.4);
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer ul {
+            list-style: none;
+            margin: 0; padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mobile-drawer .nav-link {
+            display: block;
+            font-size: 1.05rem;
+            padding: 13px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+        .mobile-drawer .nav-link:hover,
+        .mobile-drawer .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+        .drawer-close {
+            position: absolute;
+            top: 18px; right: 18px;
+            background: rgba(255,255,255,0.1);
+            border: none; color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .drawer-close:hover { background: rgba(255,255,255,0.25); }
+
+        /* ── MOBILE BREAKPOINT ── */
+        @media (max-width: 768px) {
+            .hamburger { display: flex !important; }
+            .nav-right  { display: none !important; }
+            .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
+        }
+
+
+                        /* --- FOOTER --- */
+        .kres-footer {
+            background: #1a2a4a;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Montserrat', sans-serif;
+            padding: 1rem 1.5rem 0.6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .kres-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 0.9fr;
+            gap: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: start;
+        }
+        .kres-footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        .kres-footer-brand .footer-logo-circle {
+            width: 34px; height: 34px;
+            background: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .kres-footer-brand .footer-logo-circle img {
+            width: 118%; height: 118%; object-fit: cover;
+        }
+        .kres-footer-brand .footer-brand-name {
+            color: white;
+            font-family: "Times New Roman", serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .kres-footer-brand p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .kres-footer-col {
+            padding-left: 0.5rem;
+        }
+        .kres-footer-col h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 0.6rem;
+        }
+        .kres-footer-col ul { list-style: none; padding: 0; margin: 0; }
+        .kres-footer-col ul li { margin-bottom: 0.3rem; }
+        .kres-footer-col ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .kres-footer-col ul li a:hover {
+            color: #00BFFF;
+            transform: translateX(4px);
+        }
+        .footer-socials { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+        .footer-socials a {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-socials a:hover {
+            background: rgba(0,191,255,0.3);
+            border-color: rgba(0,191,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,191,255,0.25);
+        }
+        .kres-footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 0.55rem;
+            text-align: center;
+        }
+        .kres-footer-bottom p {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .kres-footer {
+                padding: 1rem 1rem 0.6rem;
+            }
+            .kres-footer-inner {
+                grid-template-columns: 1fr !important;
+                gap: 0.85rem;
+            }
+            .kres-footer-brand,
+            .kres-footer-col {
+                padding-left: 0;
+                width: 100%;
+            }
+            .kres-footer-brand p {
+                font-size: 0.75rem;
+            }
+            .kres-footer-col h4 {
+                font-size: 0.67rem;
+                margin-bottom: 0.35rem;
+            }
+            .kres-footer-col ul li a {
+                font-size: 0.78rem;
+            }
+            .kres-footer-col ul li {
+                margin-bottom: 0.22rem;
+            }
+            .footer-socials { gap: 0.4rem; }
+            .footer-socials a {
+                width: 30px; height: 30px;
+                font-size: 0.82rem;
+            }
+            .kres-footer-bottom p {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-img-container">
+                    <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
+                </div>
+                <span class="logo-text">KRES PRESENTS</span>
+            </a>
+
+            <!-- Hamburger -->
+            <button class="hamburger" id="kresHamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    <li><a href="{% url 'dashboard' %}" class="nav-link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                    <li><a href="{% url 'blooms' %}" class="nav-link">Blooms</a></li>
+                    <li><a href="{% url 'shop' %}" class="nav-link">Shop</a></li>
+                    <li><a href="{% url 'reviews' %}" class="nav-link">Reviews</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link active">Contact Us</a></li>
+                </ul>
+            </div>        </div>
+    </nav>        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <h1 class="page-title">Start Your Floral Journey</h1>
+        <p class="page-subtitle">Looking for blooms that brighten everything?<br> Let's craft something beautiful for you. Visit our physical shop and social links</p>
+
+        <div class="contact-container">
+            <!-- Get In Touch Section -->
+            <div class="form-section">
+                <h2 class="section-title">Get In Touch</h2>
+
+                <div class="contact-info-grid">
+                    <div class="contact-info-item">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Mother of Perpetual Help Ave, Patag,<br>Cagayan De Oro City, 9000 Misamis Oriental</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+63 997 068 2324</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>@krespresents&coffee@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Mon - Sat: 10:00 AM - 7:00 PM,<br>Sun: 10:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="contactForm" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Interest</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a Service</option>
+                                <option value="bouquet">Custom Bouquets</option>
+                                <option value="delivery">Delivery Service</option>
+                                <option value="event">Event Arrangements</option>
+                                <option value="wedding">Wedding Flowers</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell Us About Your Floral Needs..." required></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Connect With Us Section -->
+            <div class="info-section">
+                <h2 class="section-title">Connect With Us</h2>
+                <p class="social-subtitle">Follow us on social media for daily blooms and updates!</p>
+
+                <div class="social-buttons">
+                    <a href="https://www.facebook.com/share/17nio9Uy85/?mibextid=wwXIfr" target="_blank" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i> @KRES on Facebook
+                    </a>
+                    <a href="https://instagram.com/kres.co" target="_blank" class="social-btn instagram">
+                        <i class="fab fa-instagram"></i> @Kres Co. on Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@kres.co2?is_from_webapp=1&sender_device=pc" target="_blank" class="social-btn tiktok">
+                        <i class="fab fa-tiktok"></i> @Kres Co. on TikTok
+                    </a>
+                </div>
+
+                <div class="info-cards" style="display: none;">
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <h3>Address</h3>
+                            <p>Mother of Perpetual Help Ave, Patag,<br>Cagayan De Oro City, 9000</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M22 16.92v3c0 .56-.44 1.06-1.06 1.08C9.5 22 1 13.5 1 2.06C1 1.44 1.44 1 2 1h3c.56 0 1.07.44 1.1 1.01.09 1.06.28 2.12.53 3.15.15.6 0 1.2-.39 1.58l-2.01 2.01c1.26 2.54 3.42 4.7 5.96 5.96l2.01-2.01c.39-.39.99-.54 1.58-.39 1.03.25 2.09.44 3.15.53.56.03 1 .54 1 1.1v2.88Z"></path>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <h3>Phone</h3>
+                            <p>+63 997 068 2324</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <h3>Email</h3>
+                            <p>krespresents.coffee@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <h3>Hours</h3>
+                            <p>Mon - Sat: 10:00 AM - 7:00 PM<br>Sun: 10:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Map -->
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.0759063649625!2d124.62471057501251!3d8.492000791549465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32fff380a3d7e26f%3A0x67de5461e037c37!2sKRES%20PRESENTS%20%26%20COFFEE%20CO.!5e0!3m2!1sen!2sph!4v1771768552271!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart icon handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.getElementById('cartIcon');
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function() {
+                    window.location.href = '{% url "cart" %}';
+                });
+            }
+        });
+
+        // Form submission - redirect to chatbox
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.location.href = '{% url "chatbox" %}';
+        });
+
+        // Mobile nav link active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                }
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+    
+            <!-- ===== KRES FOOTER ===== -->
+    <footer class="kres-footer">
+        <div class="kres-footer-inner">
+
+            <!-- Brand -->
+            <div class="kres-footer-brand">
+                <a href="{% url 'dashboard' %}" class="footer-logo">
+                    <div class="footer-logo-circle">
+                        <img src="{% static 'images/logo.png' %}" alt="KRES Logo">
+                    </div>
+                    <span class="footer-brand-name">KRES Presents</span>
+                </a>
+                <p>Wrapped in bows, filled with blooms.<br>Thoughtfully handcrafted floral arrangements, created with love and beautifully presented to you.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="kres-footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'blooms' %}">Blooms</a></li>
+                    <li><a href="{% url 'shop' %}">Shop</a></li>
+                    <li><a href="{% url 'reviews' %}">Reviews</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Our Offerings -->
+            <div class="kres-footer-col">
+                <h4>Our Offerings</h4>
+                <ul>
+                    <li><a href="{% url 'shop' %}">Bouquets</a></li>
+                    <li><a href="{% url 'shop' %}">Arrangements</a></li>
+                    <li><a href="{% url 'shop' %}">Gift Sets</a></li>
+                    <li><a href="{% url 'blooms' %}">Seasonal Blooms</a></li>
+                    <li><a href="{% url 'shop' %}">Custom Orders</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="kres-footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/kres.co" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@kres.co2?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="tel:+639970682324" aria-label="Phone"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="kres-footer-bottom">
+            <p>&copy; 2025 KRES Co. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ===== END FOOTER ===== -->
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="kresOverlay"></div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="kresDrawer">
+        <button class="drawer-close" id="kresDrawerClose" aria-label="Close menu">&#x2715;</button>
+        <ul>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li><a href="{% url 'blooms' %}" class="nav-link">Blooms</a></li>
+                <li><a href="{% url 'shop' %}" class="nav-link">Shop</a></li>
+                <li><a href="{% url 'reviews' %}" class="nav-link">Reviews</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link active">Contact Us</a></li>
+        </ul>
+    </div>
+
+
+    <script>
+    (function(){
+        var btn     = document.getElementById('kresHamburger');
+        var drawer  = document.getElementById('kresDrawer');
+        var overlay = document.getElementById('kresOverlay');
+        var closeBtn= document.getElementById('kresDrawerClose');
+        if(!btn||!drawer) return;
+
+        function open(){
+            btn.classList.add('open');
+            drawer.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow='hidden';
+        }
+        function close(){
+            btn.classList.remove('open');
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow='';
+        }
+        btn.addEventListener('click', function(){ drawer.classList.contains('open') ? close() : open(); });
+        if(closeBtn) closeBtn.addEventListener('click', close);
+        if(overlay)  overlay.addEventListener('click', close);
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+        drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+    })();
+    </script>
+
+</body>
+</html>

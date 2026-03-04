@@ -1,0 +1,1478 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRES PRESENTS - Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        /* --- BACKGROUND --- */
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
+                        url("{% static 'images/background-flowers.jpg' %}"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes electricGlow {
+            0% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
+            50% { box-shadow: 0 5px 25px rgba(0, 191, 255, 0.7), 0 0 40px rgba(0, 0, 255, 0.5); }
+            100% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
+        }
+
+        @keyframes wiggleAttention {
+            0%, 94%, 100% { transform: scale(1) rotate(0deg); }
+            95% { transform: scale(1.08) rotate(3deg); }
+            96% { transform: scale(1.08) rotate(-3deg); }
+            97% { transform: scale(1.08) rotate(3deg); }
+            98% { transform: scale(1.08) rotate(-3deg); }
+            99% { transform: scale(1.08) rotate(0deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 97%;
+            max-width: 1500px;
+            z-index: 1000;
+            background: rgba(103, 133, 182, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 3.5rem;
+            display: flex;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .nav-container { 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .logo-img-container {
+            width: 50px; height: 50px; 
+            background-color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; overflow: hidden; border: 2px solid white;
+        }
+        .logo-img { width: 118%; height: 118%; object-fit: cover; }
+        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-menu { display: flex; list-style: none; gap: 0rem; align-items: center; }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9); 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            padding: 8px 14px; 
+            border-radius: 30px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-link:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+            color: #ffffff;
+            transform: translateY(-5px) scale(1.1); 
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); 
+        }
+
+        .nav-link.active { 
+            background: rgba(255, 255, 255, 0.25); 
+            color: white;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- SHOP SECTION --- */
+        .shop-section {
+            margin-top: 130px; 
+            padding: 50px 20px; 
+            text-align: center;
+        }
+
+        .shop-section h2 {
+            color: white; 
+            font-size: 4rem; 
+            font-weight: 800;
+            margin-bottom: 10px; 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .shop-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-bar-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #00d2ff;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        }
+
+        /* --- FILTER BUTTONS --- */
+        .filter-container {
+            max-width: 600px;
+            margin: 0 auto 50px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border-color: #00d2ff;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+        }
+
+        /* --- PRODUCTS GRID --- */
+        .products-container {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 30px; 
+            max-width: 1400px; 
+            margin: 0 auto 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            color: black;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(34, 139, 34, 0.6);
+            animation: priceGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes priceGlow {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(34, 139, 34, 0.6); }
+            50% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 30px rgba(34, 139, 34, 0.9); }
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.15) rotate(2deg);
+            filter: brightness(1.1) saturate(1.2);
+        }
+
+        .product-title {
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #333 !important;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-details-btn {
+            width: auto;
+            margin: 0 auto 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: electricGlow 3s infinite ease-in-out, wiggleAttention 10s infinite;
+        }
+
+        .view-details-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            filter: brightness(1.2);
+            animation: electricGlow 1s infinite ease-in-out;
+        }
+
+        /* --- PAGINATION --- */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 50px auto;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.2);
+        }
+
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border-color: #00d2ff;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* --- CHAT BUBBLE --- */
+        .chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chat-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6);
+        }
+
+        .chat-bubble i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 30px;
+            height: 30px;
+            background: #ff4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(255, 68, 68, 0.4);
+            animation: wiggleAttention 5s infinite;
+        }
+
+        .no-results {
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 1.2rem;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 35px;
+            height: 35px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .detail-image-wrapper {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #f5d3a9 0%, #f9e5c9 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .detail-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-name {
+            font-size: 2rem;
+            color: black;
+            font-weight: 800;
+            margin: 20px 0 25px;
+            font-family: "Times New Roman", serif;
+        }
+
+        .detail-price {
+            font-size: 1.2rem;
+            color: black;
+            font-weight: 400;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        .detail-section-title {
+            font-size: 1.4rem;
+            color: #228B22;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            font-family: "Times New Roman", serif;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .color-btn {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .color-btn:hover {
+            border-color: #3a7bd5;
+            color: #3a7bd5;
+        }
+
+        .flowers-fillers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .flowers-column, .fillers-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flowers-column h4, .fillers-column h4 {
+            color: #228B22;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .flowers-list, .fillers-list {
+            color: #666;
+            font-size: 1rem;
+            line-height: 2;
+            display: block;
+            white-space: pre-line;
+        }
+
+        .custom-options {
+            border-left: 4px solid #228B22;
+            padding-left: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .custom-options strong {
+            color: #228B22;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .custom-options strong:before {
+            content: "💡";
+            font-size: 1.2rem;
+        }
+
+        #customOptionsText {
+            color: black;
+            line-height: 1.8;
+            font-weight: normal;
+        }
+
+        #customOptionsText .message-text {
+            color: #666;
+            font-weight: 700;
+        }
+
+        #customOptionsText .contact-link {
+            color: #666;
+            font-weight: normal;
+        }
+
+        #customOptionsText .contact-link-pink {
+            color: #ff69b4;
+            font-weight: 700;
+        }
+
+        #customOptionsText p {
+            margin-bottom: 15px;
+            color: black;
+            line-height: 1.8;
+        }
+
+        #customOptionsText p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ── MOBILE ONLY — shop.html ── */
+        @media (max-width: 768px) {
+
+            /* Section padding */
+            .shop-section {
+                margin-top: 100px !important;
+                padding: 40px 14px 30px !important;
+            }
+
+            /* "Our Shop" — bigger */
+            .shop-section h2 {
+                font-size: 2.8rem !important;
+                white-space: nowrap !important;
+                margin-bottom: 10px !important;
+            }
+
+            /* Subtitle — 3 lines, smaller */
+            .shop-subtitle {
+                font-size: 0.88rem !important;
+                line-height: 1.55 !important;
+                margin-bottom: 20px !important;
+            }
+            .shop-subtitle br { display: none !important; }
+
+            /* Search bar stays horizontal */
+            .search-bar-container {
+                flex-direction: row !important;
+                max-width: 100% !important;
+                margin-bottom: 16px !important;
+            }
+            .search-bar {
+                font-size: 0.88rem !important;
+                padding: 10px 16px !important;
+            }
+
+            /* Filter buttons — single row, compact */
+            .filter-container {
+                max-width: 100% !important;
+                gap: 8px !important;
+                flex-wrap: nowrap !important;
+                margin-bottom: 20px !important;
+                overflow-x: auto !important;
+                justify-content: center !important;
+            }
+            .filter-btn {
+                padding: 7px 18px !important;
+                font-size: 0.82rem !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Products grid — 2 per row like blooms */
+            .products-container {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 12px !important;
+                max-width: 100% !important;
+                margin-bottom: 20px !important;
+            }
+
+            /* Card */
+            .product-card {
+                border-radius: 12px !important;
+            }
+
+            /* Square image like blooms */
+            .product-image-wrapper {
+                height: auto !important;
+                aspect-ratio: 1 / 1 !important;
+            }
+
+            /* Title */
+            .product-title {
+                font-size: 0.82rem !important;
+                padding: 8px 6px !important;
+                height: auto !important;
+                min-height: 44px !important;
+                line-height: 1.3 !important;
+                text-align: center !important;
+            }
+
+            /* Price badge */
+            .price-badge {
+                font-size: 0.7rem !important;
+                padding: 4px 8px !important;
+                top: 8px !important;
+                right: 8px !important;
+                border-radius: 12px !important;
+            }
+
+            /* View Details button */
+            .view-details-btn {
+                font-size: 0.72rem !important;
+                padding: 7px 12px !important;
+                margin-bottom: 10px !important;
+                gap: 4px !important;
+                animation: mobileGlow 4s infinite ease-in-out !important;
+            }
+            @keyframes mobileGlow {
+                0%, 100% { box-shadow: 0 2px 8px rgba(0, 191, 255, 0.25); }
+                50%       { box-shadow: 0 2px 14px rgba(0, 191, 255, 0.45); }
+            }
+
+            /* Pagination */
+            .pagination-container {
+                gap: 5px !important;
+                margin: 20px auto !important;
+            }
+            .pagination-btn {
+                padding: 7px 11px !important;
+                font-size: 0.8rem !important;
+            }
+
+            /* Chat bubble */
+            .chat-bubble {
+                width: 48px !important;
+                height: 48px !important;
+                bottom: 18px !important;
+                right: 18px !important;
+            }
+            .chat-bubble i { font-size: 1.2rem !important; }
+
+            /* Modal — back button style like blooms */
+            .modal-content {
+                margin: 8% auto !important;
+                width: 92% !important;
+                max-width: 92% !important;
+                border-radius: 15px !important;
+                padding: 22px 16px 26px !important;
+                max-height: 88vh !important;
+            }
+            .modal-close { display: none !important; }
+            .modal-back-btn {
+                display: inline-flex !important;
+                align-items: center;
+                gap: 6px;
+                background: none;
+                border: none;
+                color: #3a7bd5;
+                font-size: 0.95rem;
+                font-weight: 700;
+                font-family: 'Montserrat', sans-serif;
+                cursor: pointer;
+                padding: 0 0 14px 0;
+                transition: opacity 0.2s;
+            }
+            .modal-back-btn:hover { opacity: 0.7; }
+            .detail-image-wrapper {
+                aspect-ratio: 1 / 1 !important;
+                height: auto !important;
+                border-radius: 12px !important;
+            }
+            .detail-image-wrapper img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+            .detail-name { font-size: 1.25rem !important; margin: 10px 0 12px !important; }
+            .detail-section-title { font-size: 1rem !important; margin: 12px 0 8px !important; }
+            .detail-price { font-size: 1rem !important; margin-bottom: 0 !important; padding-bottom: 8px !important; }
+            .flowers-fillers-grid { gap: 12px !important; margin-bottom: 12px !important; }
+            .flowers-list, .fillers-list { font-size: 0.88rem !important; line-height: 1.8 !important; }
+            .custom-options { margin-top: 12px !important; padding-top: 12px !important; font-size: 0.85rem !important; }
+            .color-options { gap: 8px !important; }
+            .color-btn { padding: 7px 14px !important; font-size: 0.82rem !important; }
+        }
+
+        /* Desktop: hide back button */
+        .modal-back-btn { display: none; }
+
+        /* ── HAMBURGER BUTTON ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 1200;
+            flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.35s ease;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+        /* ── OVERLAY ── */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 1050;
+        }
+        .mobile-overlay.open { display: block; }
+
+        /* ── SIDE DRAWER ── */
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 270px;
+            height: 100%;
+            background: rgba(20, 40, 90, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            padding: 80px 24px 40px;
+            transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -4px 0 30px rgba(0,0,0,0.4);
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer ul {
+            list-style: none;
+            margin: 0; padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mobile-drawer .nav-link {
+            display: block;
+            font-size: 1.05rem;
+            padding: 13px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+        .mobile-drawer .nav-link:hover,
+        .mobile-drawer .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+        .drawer-close {
+            position: absolute;
+            top: 18px; right: 18px;
+            background: rgba(255,255,255,0.1);
+            border: none; color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .drawer-close:hover { background: rgba(255,255,255,0.25); }
+
+        /* ── MOBILE BREAKPOINT ── */
+        @media (max-width: 768px) {
+            .hamburger { display: flex !important; }
+            .nav-right  { display: none !important; }
+            .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
+        }
+
+
+                        /* --- FOOTER --- */
+        .kres-footer {
+            background: #1a2a4a;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Montserrat', sans-serif;
+            padding: 1rem 1.5rem 0.6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .kres-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 0.9fr;
+            gap: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: start;
+        }
+        .kres-footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        .kres-footer-brand .footer-logo-circle {
+            width: 34px; height: 34px;
+            background: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .kres-footer-brand .footer-logo-circle img {
+            width: 118%; height: 118%; object-fit: cover;
+        }
+        .kres-footer-brand .footer-brand-name {
+            color: white;
+            font-family: "Times New Roman", serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .kres-footer-brand p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .kres-footer-col {
+            padding-left: 0.5rem;
+        }
+        .kres-footer-col h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 0.6rem;
+        }
+        .kres-footer-col ul { list-style: none; padding: 0; margin: 0; }
+        .kres-footer-col ul li { margin-bottom: 0.3rem; }
+        .kres-footer-col ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .kres-footer-col ul li a:hover {
+            color: #00BFFF;
+            transform: translateX(4px);
+        }
+        .footer-socials { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+        .footer-socials a {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-socials a:hover {
+            background: rgba(0,191,255,0.3);
+            border-color: rgba(0,191,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,191,255,0.25);
+        }
+        .kres-footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 0.55rem;
+            text-align: center;
+        }
+        .kres-footer-bottom p {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .kres-footer {
+                padding: 1rem 1rem 0.6rem;
+            }
+            .kres-footer-inner {
+                grid-template-columns: 1fr !important;
+                gap: 0.85rem;
+            }
+            .kres-footer-brand,
+            .kres-footer-col {
+                padding-left: 0;
+                width: 100%;
+            }
+            .kres-footer-brand p {
+                font-size: 0.75rem;
+            }
+            .kres-footer-col h4 {
+                font-size: 0.67rem;
+                margin-bottom: 0.35rem;
+            }
+            .kres-footer-col ul li a {
+                font-size: 0.78rem;
+            }
+            .kres-footer-col ul li {
+                margin-bottom: 0.22rem;
+            }
+            .footer-socials { gap: 0.4rem; }
+            .footer-socials a {
+                width: 30px; height: 30px;
+                font-size: 0.82rem;
+            }
+            .kres-footer-bottom p {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-img-container">
+                    <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
+                </div>
+                <span class="logo-text">KRES PRESENTS</span>
+            </a>
+           
+            <!-- Hamburger -->
+            <button class="hamburger" id="kresHamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    <li><a href="{% url 'dashboard' %}" class="nav-link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                    <li><a href="{% url 'blooms' %}" class="nav-link">Blooms</a></li>
+                    <li><a href="{% url 'shop' %}" class="nav-link active">Shop</a></li>
+                    <li><a href="{% url 'reviews' %}" class="nav-link">Reviews</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shop Section -->
+    <section class="shop-section">
+        <h2>Our Catalog</h2>
+        <p class="shop-subtitle">Browse our complete collection of beautifully crafted bouquets and imported flowers.<br> Find the perfect arrangements for any occasion.</p>
+        
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search for flowers, bouquets..." oninput="performSearch()">
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProducts('bouquets')">Bouquets</button>
+            <button class="filter-btn" onclick="filterProducts('flowers')">Flowers</button>
+            <button class="filter-btn" onclick="filterProducts('fillers')">Fillers</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-container" id="productsContainer"></div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            No products found matching your search...
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <div class="pagination-container" id="paginationContainer"></div>
+
+    <!-- Chat Bubble -->
+    <div class="chat-bubble" onclick="openChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDetail()">×</button>
+            <button class="modal-back-btn" onclick="closeDetail()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            
+            <div class="detail-image-wrapper">
+                <img id="detailImage" src="{% static 'images/product1.jpg' %}" alt="Product">
+            </div>
+
+            <h1 class="detail-name" id="detailName">Premium Bouquet</h1>
+            
+            <h3 class="detail-section-title">Price</h3>
+            <div class="detail-price" id="detailPrice">₱ 2500.00</div>
+
+            <!-- Available Colors — shown for flowers only -->
+            <div id="colorsSection" style="display:none;">
+                <h3 class="detail-section-title">Available Colors</h3>
+                <div class="color-options" id="colorOptionsList"></div>
+            </div>
+
+            <!-- Flowers & Fillers — shown for bouquets only -->
+            <div id="flowersFillerSection" style="display:none;">
+                <h3 class="detail-section-title" id="flowersFillerTitle">Flowers and Fillers</h3>
+                <div class="flowers-fillers-grid">
+                    <div class="flowers-column">
+                        <h4>Flowers</h4>
+                        <div class="flowers-list" id="flowersList"></div>
+                    </div>
+                    <div class="fillers-column" id="fillersColumn">
+                        <h4>Fillers</h4>
+                        <div class="fillers-list" id="fillersList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-options">
+                <strong>Custom Options Available</strong>
+                <div id="customOptionsText">
+                    <p>Want to adjust the colors or add a special touch? Contact us to discuss your preferences. We can customize this bouquet to match your specific needs and occasion!</p>
+                    <p><span class="message-text">Message us on our social media accounts</span> on the <span class="contact-link-pink">Contact Us</span> page to place your custom order.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data with individual entries
+        const allProducts = [
+            // BOUQUETS (61 items but can add more soon)
+            { id: 1, name: 'LR01', price: 399, category: 'bouquets', image: '{% static "images/product1.jpg" %}', flowers: '3 Local Roses', fillers: 'Import Fillers' },
+            { id: 2, name: 'LR02', price: 699, category: 'bouquets', image: '{% static "images/product2.jpg" %}', flowers: '12 Local Roses', fillers: 'Imported Fillers' },
+            { id: 3, name: 'LR03', price: 799, category: 'bouquets', image: '{% static "images/product3.jpg" %}', flowers: '12 Sprayed Lavender Local Roses', fillers: 'Mixed Fillers' },
+            { id: 4, name: 'LR06', price: 849, category: 'bouquets', image: '{% static "images/product4.jpg" %}', flowers: '18 Local Roses', fillers: 'Import Fillers' },
+            { id: 5, name: 'LR07', price: 999, category: 'bouquets', image: '{% static "images/product5.jpg" %}', flowers: '24 Local Roses' },
+            { id: 6, name: 'LR08', price: 1399, category: 'bouquets', image: '{% static "images/product6.jpg" %}', flowers: '24 Local Roses(round type)', fillers: 'Import Fillers' },
+            { id: 7, name: 'ML147', price: 1500, category: 'bouquets', image: '{% static "images/product7.jpg" %}', flowers: '24 Stems Mixed Sprayed Roses', fillers: '2 Import Fillers' },
+            { id: 8, name: 'LRIF48', price: 1500, category: 'bouquets', image: '{% static "images/product8.jpg" %}', flowers: 'Round Type Roses', fillers: 'Statice' },
+            { id: 9, name: 'LR10', price: 2500, category: 'bouquets', image: '{% static "images/product9.jpg" %}', flowers: '36 Local Roses', fillers: 'Round Gypsophila' },
+            { id: 10, name: 'thmbln1', price: 800, category: 'bouquets', image: '{% static "images/product10.jpg" %}', flowers: 'Mixed Local Flowers & Imported Flowers' },
+            { id: 11, name: 'thmbln2', price: 1500, category: 'bouquets', image: '{% static "images/product11.jpg" %}', flowers: 'Mixed Local Flowers & Imported Flowers' },
+            { id: 12, name: 'thmbln3', price: 3500, category: 'bouquets', image: '{% static "images/product12.jpg" %}', flowers: 'Mixed Local Flowers & Imported Flowers' },
+            { id: 13, name: 'Medium Thumbelina & 2 Tulips ', price: 1990, category: 'bouquets', image: '{% static "images/product13.jpg" %}', flowers: 'Mixed Local Flowers & Imported Flowers\n2 Tulips' },
+            { id: 14, name: 'Medium', price: 2999, category: 'bouquets', image: '{% static "images/product14.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 15, name: 'Large Lily Bouquet', price: 4500, category: 'bouquets', image: '{% static "images/product15.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 16, name: 'Extra Large Lily Bouquet', price: 5500, category: 'bouquets', image: '{% static "images/product16.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 17, name: 'Lily Bomb Bouquet', price: 3899, category: 'bouquets', image: '{% static "images/product17.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 18, name: 'Round Mixed with Bloom Tulips Bouquet', price: 5000, category: 'bouquets', image: '{% static "images/product18.jpg" %}', flowers: 'Mixed Local Flowers & Imported Flowers\nTulips' },
+            { id: 19, name: 'BLR12 Bouquet', price: 1500, category: 'bouquets', image: '{% static "images/product19.jpg" %}', flowers: 'Local Roses', fillers: 'Round Gypsophila' },
+            { id: 20, name: 'BLCGR Bouquet', price: 2999, category: 'bouquets', image: '{% static "images/product20.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 21, name: 'BLCLR', price: 2999, category: 'bouquets', image: '{% static "images/product21.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 22, name: 'Purple Imported Flowers', price: 3500, category: 'bouquets', image: '{% static "images/product22.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 23, name: 'Standing Round Bouquet', price: 3500, category: 'bouquets', image: '{% static "images/product23.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 24, name: 'Clean Vibe Bouquet', price: 3500, category: 'bouquets', image: '{% static "images/product24.jpg" %}', flowers: 'Mixed Imported Flowers' },
+            { id: 25, name: 'Dried Fossilized Roses & Preserved fillers', price: 2500, category: 'bouquets', image: '{% static "images/product25.jpg" %}', flowers: 'Ivory Roses\nWhite Orchids', fillers: 'Pittosporum\nEucalyptus' },
+            { id: 26, name: 'BLR', price: 3500, category: 'bouquets', image: '{% static "images/product26.jpg" %}', flowers: '72 Local Roses' },
+            { id: 27, name: 'Bright Vibe Imported Flowers Bouquet', price: 5000, category: 'bouquets', image: '{% static "images/product27.jpg" %}', flowers: 'China Roses\nGerbera', fillers: 'Import Fillers' },
+            { id: 28, name: 'IR11', price: 1500, category: 'bouquets', image: '{% static "images/product28.jpg" %}', flowers: '1 Ecuadorian Rose', fillers: 'Premium Imported Fillers' },
+            { id: 29, name: 'IR12', price: 2999, category: 'bouquets', image: '{% static "images/product29.jpg" %}', flowers: '3 Ecuadorian Rose', fillers: 'Premium Imported Fillers' },
+            { id: 30, name: 'IR13', price: 2999, category: 'bouquets', image: '{% static "images/product30.jpg" %}', flowers: '3 China Roses' },
+            { id: 31, name: 'LR14', price: 1799, category: 'bouquets', image: '{% static "images/product31.jpg" %}', flowers: 'N36 Local Roses', fillers: 'Ruscus\nBaby Breath' },
+            { id: 32, name: 'LR15', price: 3500, category: 'bouquets', image: '{% static "images/product32.jpg" %}', flowers: '72 Local Roses', fillers: 'Import Fillers' },
+            { id: 33, name: 'LR16', price: 5899, category: 'bouquets', image: '{% static "images/product33.jpg" %}', flowers: '144 Local Roses', fillers: 'Premium Imported Fillers' },
+            { id: 34, name: 'ASRTF', price: 2500, category: 'bouquets', image: '{% static "images/product34.jpg" %}', flowers: 'Assorted Available Local Roses', fillers: 'Eucalyptus' },
+            { id: 35, name: 'DWFF', price: 2999, category: 'bouquets', image: '{% static "images/product35.jpg" %}', flowers: 'Wooden and Fossilized Flowers', fillers: 'Pittosporum\nEucalyptus' },
+            { id: 36, name: 'IR19', price: 3999, category: 'bouquets', image: '{% static "images/product36.jpg" %}', flowers: '10 China Roses' },
+            { id: 37, name: 'IC20', price: 499, category: 'bouquets', image: '{% static "images/product37.jpg" %}', flowers: '1 Imported Carnation', fillers: 'Import Fillers' },
+            { id: 38, name: 'IC21', price: 899, category: 'bouquets', image: '{% static "images/product38.jpg" %}', flowers: '3 Imported Carnations', fillers: 'Import Fillers' },
+            { id: 39, name: 'IC22', price: 1100, category: 'bouquets', image: '{% static "images/product39.jpg" %}', flowers: '5 Imported Carnations', fillers: 'Import Fillers' },
+            { id: 40, name: 'IC23', price: 2899, category: 'bouquets', image: '{% static "images/product40.jpg" %}', flowers: '10 Imported Carnations', fillers: 'Premium Import Fillers' },
+            { id: 41, name: 'IC24', price: 3299, category: 'bouquets', image: '{% static "images/product41.jpg" %}', flowers: '10 Imported Carnations', fillers: 'Premium Import Fillers' },
+            { id: 42, name: 'Engrande Carnation & Lily', price: 4200, category: 'bouquets', image: '{% static "images/product42.jpg" %}', flowers: 'Carnations\nLilies', fillers: 'Import Fillers' },
+            { id: 43, name: 'IC26', price: 1200, category: 'bouquets', image: '{% static "images/product43.jpg" %}', flowers: 'Single Sunflower', fillers: 'Fillers' },
+            { id: 44, name: 'IC27', price: 1990, category: 'bouquets', image: '{% static "images/product44.jpg" %}', flowers: '3 Sunflower', fillers: 'Import Fillers' },
+            { id: 45, name: 'IC28', price: 2499, category: 'bouquets', image: '{% static "images/product45.jpg" %}', flowers: '5 Sunflowers', fillers: 'Premium Import Fillers' },
+            { id: 46, name: 'IG29', price: 380, category: 'bouquets', image: '{% static "images/product46.jpg" %}', flowers: '1 Gerbera', fillers: 'Eucalyptus\nImport Fillers' },
+            { id: 47, name: 'IG30', price: 799, category: 'bouquets', image: '{% static "images/product47.jpg" %}', flowers: '3 Gerbera', fillers: 'Eucalyptus\nImport Fillers' },
+            { id: 48, name: 'IG31', price: 999, category: 'bouquets', image: '{% static "images/product48.jpg" %}', flowers: 'Gerbera\nMixed Flowers', fillers: 'Import Fillers' },
+            { id: 49, name: 'IG32', price: 2499, category: 'bouquets', image: '{% static "images/product49.jpg" %}', flowers: '6 Gerbera\nMixed Flowers', fillers: 'Import Fillers' },
+            { id: 50, name: 'IM33', price: 2699, category: 'bouquets', image: '{% static "images/product50.jpg" %}', flowers: 'Imported Flowers\nLocal Mixed Flowers', fillers: 'Import Fillerss' },
+            { id: 51, name: 'IM34', price: 2399, category: 'bouquets', image: '{% static "images/product51.jpg" %}', flowers: 'Imported Flowers\nLocal Mixed Flowers', fillers: 'Greeny Fillers' },
+            { id: 52, name: 'IG35', price: 3899, category: 'bouquets', image: '{% static "images/product52.jpg" %}', flowers: 'Imported Flowers\nLocal Mixed Flowers', fillers: 'Premium Import Fillers' },
+            { id: 53, name: 'IT37', price: 900, category: 'bouquets', image: '{% static "images/product53.jpg" %}', flowers: '1 Holland Tulip', fillers: 'Premium Import Fillers' },
+            { id: 54, name: 'IT38', price: 1500, category: 'bouquets', image: '{% static "images/product54.jpg" %}', flowers: '2 Holland Tulips', fillers: 'Premium Import Fillers' },
+            { id: 55, name: 'IT39', price: 1799, category: 'bouquets', image: '{% static "images/product55.jpg" %}', flowers: '3 Holland Tulips', fillers: 'Premium Import Fillers' },
+            { id: 56, name: 'ITC40', price: 2200, category: 'bouquets', image: '{% static "images/product56.jpg" %}', flowers: '3 Holland Tulips\n3 Carnations', fillers: 'Import Fillers' },
+            { id: 57, name: 'IT41', price: 2900, category: 'bouquets', image: '{% static "images/product57.jpg" %}', flowers: '6 Holland Tulips', fillers: 'Import Fillers' },
+            { id: 58, name: 'ITC42', price: 3500, category: 'bouquets', image: '{% static "images/product58.jpg" %}', flowers: '6 Holland Tulips\n4 Carnations', fillers: 'Premium Import Fillers' },
+            { id: 59, name: 'IT43', price: 4900, category: 'bouquets', image: '{% static "images/product59.jpg" %}', flowers: '10 Holland Tulips', fillers: 'Premium Import Fillers' },
+            { id: 60, name: 'IT44', price: 5900, category: 'bouquets', image: '{% static "images/product60.jpg" %}', flowers: '21 Holland Tulips' },
+            { id: 61, name: 'IT45', price: 6299, category: 'bouquets', image: '{% static "images/product61.jpg" %}', flowers: '21 Holland Tulips\nLily' },
+         
+
+          // FLOWERS (10 items)
+            { id: 81, name: 'Gerbera', price: 50.00, category: 'flowers', image: '{% static "images/product81.jpg" %}', availableColors: ['Pink', 'Red', 'Yellow', 'Orange', 'White'] },
+            { id: 82, name: 'Peony', price: 1300.00, category: 'flowers', image: '{% static "images/product82.jpg" %}', availableColors: ['Pink'] },
+            { id: 83, name: 'Local Roses', price: 50.00, category: 'flowers', image: '{% static "images/product83.jpg" %}', availableColors: ['Red', 'Pink', 'White'] },
+            { id: 84, name: 'Stargazer Lily', price: 500.00, category: 'flowers', image: '{% static "images/product84.jpg" %}', availableColors: ['Pink', 'White'] },
+            { id: 85, name: 'Carnation', price: 100.00, category: 'flowers', image: '{% static "images/product85.jpg" %}', availableColors: ['Red', 'Pink', 'White'] },
+            { id: 86, name: 'Phalaenopsis', price: 1500.00, category: 'flowers', image: '{% static "images/product86.jpg" %}', availableColors: ['White', 'Pink', 'Purple'] },
+            { id: 87, name: 'Sunflower', price: 250.00, category: 'flowers', image: '{% static "images/product87.jpg" %}', availableColors: ['Yellow'] },
+            { id: 88, name: 'Tulip', price: 250.00, category: 'flowers', image: '{% static "images/product88.jpg" %}', availableColors: ['Red', 'Pink', 'White', 'Yellow', 'Purple'] },
+            { id: 89, name: 'Ecuadorian Roses', price: 250.00, category: 'flowers', image: '{% static "images/product89.jpg" %}', availableColors: ['Red', 'Pink', 'White', 'Blue', 'Peach', 'Yellow', 'Orange'] },
+            { id: 90, name: 'Lisianthus', price: 270.00, category: 'flowers', image: '{% static "images/product90.jpg" %}', availableColors: ['Pink', 'White', 'Purple', 'Lavender', 'Green'] },
+
+            // FILLERS (4 items)
+            { id: 113, name: 'Statice', price: 250.00, category: 'fillers', image: '{% static "images/product113.jpg" %}'},
+            { id: 114, name: 'Eucalyptus', price: 200.00, category: 'fillers', image: '{% static "images/product114.jpg" %}'},
+            { id: 115, name: 'Gypsophila', price: 150.00, category: 'fillers', image: '{% static "images/product115.jpg" %}'},
+            { id: 116, name: 'Parvifolia', price: 200.00, category: 'fillers', image: '{% static "images/product116.jpg" %}' }
+        ];
+
+        let currentCategory = 'bouquets';
+        let currentPage = 1;
+        let itemsPerPage = 8;
+        let searchQuery = '';
+
+        // Get filtered products
+        function getFilteredProducts() {
+            let filtered = allProducts.filter(p => p.category === currentCategory);
+            if (searchQuery) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+            return filtered;
+        }
+
+        function getPageProducts() {
+            const filtered = getFilteredProducts();
+            const startIdx = (currentPage - 1) * itemsPerPage;
+            const endIdx = startIdx + itemsPerPage;
+            return filtered.slice(startIdx, endIdx);
+        }
+
+        function getTotalPages() {
+            return Math.ceil(getFilteredProducts().length / itemsPerPage);
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            const noResults = document.getElementById('noResults');
+            const products = getPageProducts();
+
+            if (products.length === 0) {
+                container.innerHTML = '';
+                noResults.style.display = 'block';
+                renderPagination();
+                return;
+            }
+
+            noResults.style.display = 'none';
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="price-badge">₱ ${(product.price).toFixed(2)}</div>
+                    <div class="product-image-wrapper">
+                        <img src="${product.image}" class="product-image" alt="${product.name}">
+                    </div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <button class="view-details-btn" onclick="viewDetails(${product.id})">View Details</button>
+                </div>
+            `).join('');
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('paginationContainer');
+            const totalPages = getTotalPages();
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let buttons = '';
+            buttons += `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+            </button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    buttons += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    buttons += `<button class="pagination-btn" disabled>...</button>`;
+                }
+            }
+
+            buttons += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                <i class="fas fa-chevron-right"></i>
+            </button>`;
+
+            container.innerHTML = buttons;
+        }
+
+        function filterProducts(category) {
+            currentCategory = category;
+            currentPage = 1;
+            searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function performSearch() {
+            searchQuery = document.getElementById('searchInput').value;
+            currentPage = 1;
+            renderProducts();
+        }
+
+        function goToPage(page) {
+            const totalPages = getTotalPages();
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderProducts();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        // View details — shows correct section per category
+        function viewDetails(productId) {
+            const product = allProducts.find(p => p.id === productId);
+
+            document.getElementById('detailName').textContent = product.name;
+            document.getElementById('detailPrice').textContent = '₱ ' + (product.price).toFixed(2);
+            document.getElementById('detailImage').src = product.image;
+
+            const colorsSection = document.getElementById('colorsSection');
+            const ffSection = document.getElementById('flowersFillerSection');
+
+            if (product.category === 'flowers' && product.availableColors && product.availableColors.length) {
+                // Show Available Colors, hide Flowers & Fillers
+                colorsSection.style.display = 'block';
+                ffSection.style.display = 'none';
+                document.getElementById('colorOptionsList').innerHTML = product.availableColors
+                    .map(color => `<span class="color-btn">${color}</span>`)
+                    .join('');
+            } else if (product.category === 'bouquets' && (product.flowers || product.fillers)) {
+                // Show Flowers & Fillers, hide Colors
+                colorsSection.style.display = 'none';
+                ffSection.style.display = 'block';
+                document.getElementById('flowersList').textContent = product.flowers || '';
+                document.getElementById('fillersList').textContent = product.fillers || '';
+                // Hide fillers column if no fillers info
+                const fillersColumn = document.getElementById('fillersColumn');
+                const flowersFillerTitle = document.getElementById('flowersFillerTitle');
+                if (product.fillers && product.fillers.trim() !== '') {
+                    fillersColumn.style.display = 'block';
+                    flowersFillerTitle.textContent = 'Flowers and Fillers';
+                } else {
+                    fillersColumn.style.display = 'none';
+                    flowersFillerTitle.textContent = 'Flowers';
+                }
+            } else {
+                // Fillers — hide both sections
+                colorsSection.style.display = 'none';
+                ffSection.style.display = 'none';
+            }
+
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('show');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target == modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        function openChat() {
+            window.location.href = '{% url "chatbox" %}';
+        }
+
+        renderProducts();
+    </script>
+
+    
+            <!-- ===== KRES FOOTER ===== -->
+    <footer class="kres-footer">
+        <div class="kres-footer-inner">
+
+            <!-- Brand -->
+            <div class="kres-footer-brand">
+                <a href="{% url 'dashboard' %}" class="footer-logo">
+                    <div class="footer-logo-circle">
+                        <img src="{% static 'images/logo.png' %}" alt="KRES Logo">
+                    </div>
+                    <span class="footer-brand-name">KRES Presents</span>
+                </a>
+                <p>Wrapped in bows, filled with blooms.<br>Thoughtfully handcrafted floral arrangements, created with love and beautifully presented to you.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="kres-footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'blooms' %}">Blooms</a></li>
+                    <li><a href="{% url 'shop' %}">Shop</a></li>
+                    <li><a href="{% url 'reviews' %}">Reviews</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Our Offerings -->
+            <div class="kres-footer-col">
+                <h4>Our Offerings</h4>
+                <ul>
+                    <li><a href="{% url 'shop' %}">Bouquets</a></li>
+                    <li><a href="{% url 'shop' %}">Arrangements</a></li>
+                    <li><a href="{% url 'shop' %}">Gift Sets</a></li>
+                    <li><a href="{% url 'blooms' %}">Seasonal Blooms</a></li>
+                    <li><a href="{% url 'shop' %}">Custom Orders</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="kres-footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/kres.co" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@kres.co2?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="tel:+639970682324" aria-label="Phone"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="kres-footer-bottom">
+            <p>&copy; 2025 KRES Co. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ===== END FOOTER ===== -->
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="kresOverlay"></div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="kresDrawer">
+        <button class="drawer-close" id="kresDrawerClose" aria-label="Close menu">&#x2715;</button>
+        <ul>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li><a href="{% url 'blooms' %}" class="nav-link">Blooms</a></li>
+                <li><a href="{% url 'shop' %}" class="nav-link active">Shop</a></li>
+                <li><a href="{% url 'reviews' %}" class="nav-link">Reviews</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <script>
+    (function(){
+        var btn     = document.getElementById('kresHamburger');
+        var drawer  = document.getElementById('kresDrawer');
+        var overlay = document.getElementById('kresOverlay');
+        var closeBtn= document.getElementById('kresDrawerClose');
+        if(!btn||!drawer) return;
+
+        function open(){
+            btn.classList.add('open');
+            drawer.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow='hidden';
+        }
+        function close(){
+            btn.classList.remove('open');
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow='';
+        }
+        btn.addEventListener('click', function(){ drawer.classList.contains('open') ? close() : open(); });
+        if(closeBtn) closeBtn.addEventListener('click', close);
+        if(overlay)  overlay.addEventListener('click', close);
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+        drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+    })();
+    </script>
+
+</body>
+</html>
+</html>
