@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRES PRESENTS - Customer Reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #000; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            color: white;
+        }
+        
+        /* --- PARALLAX BACKGROUND --- */
+        .parallax-bg {
+            position: fixed;
+            top: -5%; left: -5%;
+            width: 110%; height: 110%;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+            url("static/images/background-flowers.jpg");
+            background-size: cover; 
+            background-position: center;
+            z-index: -1;
+            transition: transform 0.15s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 97%;
+            max-width: 1500px;
+            z-index: 1000;
+            background: rgba(103, 133, 182, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 3.5rem;
+            display: flex;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .logo-img-container {
+            width: 50px; height: 50px;
+            background-color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; overflow: hidden; border: 2px solid white;
+        }
+        .logo-img { width: 118%; height: 118%; object-fit: cover; }
+        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-menu { display: flex; list-style: none; gap: 0rem; align-items: center; }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- HAMBURGER --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 1200;
+            flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.35s ease;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+        /* --- REVIEWS SECTION --- */
+        .reviews-section {
+            margin-top: 130px;
+            padding: 50px 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .reviews-heading {
+            text-align: center;
+            margin-bottom: 48px;
+            padding: 0 20px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .reviews-heading h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .reviews-heading p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;   /* single line on desktop */
+            margin: 0 auto;
+        }
+
+        /* ════════════════════════════════
+           CAROUSEL
+        ════════════════════════════════ */
+        @keyframes accentScroll {
+            0%   { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* outer wrapper — side fade vignette */
+        .carousel-wrapper {
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+            position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            mask-image:         linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+
+        .carousel-track-wrap {
+            width: 100%;
+            overflow: hidden;
+            padding: 28px 0 32px;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .carousel-track-wrap.is-dragging { cursor: grabbing; }
+
+        .carousel-track {
+            display: flex;
+            align-items: center;
+            will-change: transform;
+        }
+        /* smooth spring-like ease */
+        .carousel-track.animating {
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ── CARD ── */
+        .review-card {
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            width: var(--card-w, 660px);
+            margin: 0 var(--card-gap, 18px);
+            padding: 38px 42px 34px;
+            color: #1e2d4a;
+            /* crisp white glass with subtle blue tint */
+            background: rgba(255, 255, 255, 0.96);
+            border: none;
+            /* clean shadow — no glow blob */
+            box-shadow:
+                0 2px 0 rgba(103,133,182,0.08),
+                0 8px 24px rgba(30, 45, 74, 0.10),
+                0 1px 3px rgba(0,0,0,0.06);
+            transition:
+                transform  0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity    0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                filter     0.65s ease;
+            transform-origin: center bottom;
+        }
+
+        /* accent top stripe — scrolling gradient */
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            border-radius: 24px 24px 0 0;
+            background: linear-gradient(90deg, #6785b6, #60c0f0, #a78bfa, #f472b6, #6785b6);
+            background-size: 200% 100%;
+            animation: accentScroll 5s linear infinite;
+        }
+
+        /* faint watermark */
+        .review-card::after {
+            content: '\201C';
+            position: absolute;
+            bottom: -8px; right: 18px;
+            font-size: 140px;
+            line-height: 1;
+            font-family: Georgia, serif;
+            color: rgba(103,133,182,0.05);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* active: full opacity, natural size */
+        .review-card.is-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            z-index: 3;
+            border-color: transparent;
+            box-shadow:
+                0 2px 0 rgba(103,133,182,0.10),
+                0 12px 32px rgba(30,45,74,0.13),
+                0 1px 4px rgba(0,0,0,0.07);
+        }
+
+        /* prev / next: scaled down, dimmed, slightly lowered */
+        .review-card.is-prev,
+        .review-card.is-next {
+            opacity: 0.48;
+            transform: scale(0.87) translateY(20px);
+            filter: blur(0.5px);
+            cursor: pointer;
+            z-index: 2;
+        }
+        .review-card.is-prev:hover,
+        .review-card.is-next:hover {
+            opacity: 0.68;
+            transform: scale(0.90) translateY(12px);
+        }
+
+        /* far cards: barely visible */
+        .review-card.is-far {
+            opacity: 0.14;
+            transform: scale(0.74) translateY(34px);
+            filter: blur(2px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── CARD INTERIOR ── */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .avatar {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            font-size: 19px;
+            border: 3px solid rgba(255,255,255,0.9);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.16);
+        }
+
+        .reviewer-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+        .reviewer-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a2a4a;
+        }
+
+        .reviewer-date {
+            font-size: 11px;
+            color: #8a9fcc;
+            font-weight: 500;
+        }
+
+        .stars-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #fffbec, #fff3c4);
+            border: 1px solid rgba(245,158,11,0.28);
+            border-radius: 20px;
+            padding: 5px 11px;
+            flex-shrink: 0;
+        }
+        .stars-badge span {
+            color: #f59e0b;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .stars-badge .rating-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: #92660a;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(103,133,182,0.18) 40%, rgba(103,133,182,0.18) 60%, transparent);
+            margin: 0 0 16px;
+        }
+
+        .quote-mark-big {
+            display: block;
+            font-family: Georgia, serif;
+            font-size: 48px;
+            line-height: 0.85;
+            color: #6785b6;
+            opacity: 0.22;
+            margin-bottom: 9px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            color: #3d5068;
+            line-height: 1.88;
+            font-weight: 400;
+            overflow: visible;
+        }
+
+        /* ── DOTS ── */
+        .dots {
+            text-align: center;
+            margin-top: 16px;
+            margin-bottom: 36px;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.28);
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dot.active {
+            background: rgba(255,255,255,0.90);
+            width: 26px;
+            border-radius: 4px;
+        }
+        .dot:hover:not(.active) {
+            background: rgba(255,255,255,0.55);
+            transform: scale(1.3);
+        }
+
+        /* ══════════════════════════════════
+           STATS ROW — colored glassmorphism
+        ══════════════════════════════════ */
+        .stats-row {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            padding: 0 24px;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        .stat {
+            position: relative;
+            border-radius: 20px;
+            padding: 26px 18px 22px;
+            text-align: center;
+            overflow: hidden;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.22);
+            transition: transform 0.35s ease, background 0.35s ease;
+        }
+        /* single light color — soft sky blue */
+        .stat:nth-child(1),
+        .stat:nth-child(2),
+        .stat:nth-child(3) {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(255, 255, 255, 0.90);
+        }
+        /* glossy inner highlight */
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            border-radius: 20px 20px 0 0;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.40) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .stat:hover { transform: translateY(-6px); }
+        .stat:nth-child(1):hover,
+        .stat:nth-child(2):hover,
+        .stat:nth-child(3):hover { background: rgba(255,255,255,0.95); }
+
+        .stat-num {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1;
+            margin-bottom: 7px;
+            background: linear-gradient(135deg, #3a7bd5 0%, #00c6fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #3a5a7a;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        /* ══════════════════════════════════
+           FOOTER
+        ══════════════════════════════════ */
+
+        /* --- MOBILE OVERLAY --- */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1050;
+        }
+        .mobile-overlay.open { display: block; }
+
+        /* --- MOBILE DRAWER --- */
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 270px;
+            height: 100%;
+            background: rgba(20, 40, 90, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            padding: 80px 24px 40px;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -4px 0 30px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mobile-drawer ul li {
+            margin-bottom: 0;
+        }
+
+        .mobile-drawer .nav-link {
+            display: block;
+            font-size: 1.05rem;
+            padding: 13px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        .mobile-drawer .nav-link:hover,
+        .mobile-drawer .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .drawer-close:hover { background: rgba(255, 255, 255, 0.25); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .navbar { padding: 0.3rem 1.5rem; }
+            .logo-text { font-size: 1rem; }
+            .hamburger { display: flex !important; }
+            .nav-right { display: none !important; }
+            .reviews-heading h1 { font-size: 2.5rem; }
+            .carousel-wrapper { animation: none; opacity: 1; }
+            .dots { animation: none; opacity: 1; }
+            .stats-row { animation: none; opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex !important; }
+            .nav-right { display: none !important; }
+            .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
+
+            .reviews-section { padding: 24px 0 44px; margin-top: 100px; }
+            .reviews-heading { padding: 0 16px; margin-bottom: 22px; margin-top: 36px; }
+            .reviews-heading h1 { font-size: 2.4rem; margin-bottom: 10px; }
+            .reviews-heading p { font-size: 0.88rem; white-space: normal; }
+
+            .carousel-wrapper { margin-top: 20px; }
+
+            .review-card { width: 82vw !important; max-width: 360px !important; padding: 26px 24px 22px !important; margin: 0 8px !important; border-radius: 20px !important; }
+            .review-card::after { font-size: 120px; }
+            .avatar { width: 42px; height: 42px; font-size: 15px; border-width: 2px; }
+            .reviewer-name { font-size: 13px; }
+            .reviewer-date { display: none; }
+            .stars-badge { padding: 4px 10px; gap: 4px; }
+            .stars-badge span { font-size: 11px; }
+            .stars-badge .rating-num { font-size: 10px; }
+            .card-header { gap: 10px; margin-bottom: 13px; }
+            .card-divider { margin: 0 0 13px; }
+            .quote-mark-big { font-size: 36px; margin-bottom: 8px; }
+            .review-text { font-size: 13px; line-height: 1.78; }
+
+            .dots { margin-top: 14px; margin-bottom: 32px; }
+            .dot { width: 6px; height: 6px; margin: 0 3px; }
+            .dot.active { width: 18px; }
+
+            .stats-row { gap: 8px; margin: 0 auto 22px; padding: 0 32px; max-width: 100%; }
+            .stat { padding: 14px 6px 12px; border-radius: 14px; }
+            .stat-num { font-size: 22px; margin-bottom: 4px; }
+            .stat-label { font-size: 8px; letter-spacing: 0.3px; }
+
+            .footer-contact { padding: 16px 14px 32px; gap: 8px; max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { width: calc(100% - 20px) !important; padding: 0.4rem 1rem !important; top: 15px; }
+
+            .reviews-section { padding: 18px 0 40px; margin-top: 80px; }
+            .reviews-heading { padding: 0 12px; margin-bottom: 20px; margin-top: 32px; }
+            .reviews-heading h1 { font-size: 2rem; margin-bottom: 7px; }
+            .reviews-heading p { font-size: 0.82rem; white-space: normal; }
+
+            .carousel-wrapper { margin-top: 18px; }
+
+            .review-card { width: 90vw !important; max-width: 100% !important; padding: 18px 16px 20px !important; margin: 0 4px !important; border-radius: 18px !important; min-height: auto; }
+            .review-card::after { font-size: 85px; opacity: 0.03; }
+            .avatar { width: 36px; height: 36px; font-size: 13px; border-width: 2px; }
+            .reviewer-name { font-size: 12px; }
+            .reviewer-date { display: none; }
+            .stars-badge { padding: 3px 9px; gap: 3px; }
+            .stars-badge span { font-size: 10px; }
+            .stars-badge .rating-num { display: none; }
+            .card-header { gap: 8px; margin-bottom: 10px; }
+            .card-divider { margin: 0 0 10px; }
+            .quote-mark-big { font-size: 26px; margin-bottom: 6px; }
+            .review-text { font-size: 13px; line-height: 1.85; word-break: break-word; }
+
+            .dots { margin-top: 12px; margin-bottom: 28px; }
+            .dot { width: 5px; height: 5px; margin: 0 2px; }
+            .dot.active { width: 14px; }
+
+            .stats-row { gap: 6px; margin: 0 auto 20px; padding: 0 28px; max-width: 100%; }
+            .stat { padding: 12px 5px 10px; border-radius: 12px; }
+            .stat-num { font-size: 19px; margin-bottom: 3px; }
+            .stat-label { font-size: 7.5px; letter-spacing: 0.2px; }
+
+            .footer-contact { padding: 14px 12px 28px; gap: 7px; max-width: 100%; }
+        }
+
+                        /* --- FOOTER --- */
+        .kres-footer {
+            background: #1a2a4a;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Montserrat', sans-serif;
+            padding: 1rem 1.5rem 0.6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .kres-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 0.9fr;
+            gap: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: start;
+        }
+        .kres-footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        .kres-footer-brand .footer-logo-circle {
+            width: 34px; height: 34px;
+            background: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .kres-footer-brand .footer-logo-circle img {
+            width: 118%; height: 118%; object-fit: cover;
+        }
+        .kres-footer-brand .footer-brand-name {
+            color: white;
+            font-family: "Times New Roman", serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .kres-footer-brand p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .kres-footer-col {
+            padding-left: 0.5rem;
+        }
+        .kres-footer-col h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 0.6rem;
+        }
+        .kres-footer-col ul { list-style: none; padding: 0; margin: 0; }
+        .kres-footer-col ul li { margin-bottom: 0.3rem; }
+        .kres-footer-col ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .kres-footer-col ul li a:hover {
+            color: #00BFFF;
+            transform: translateX(4px);
+        }
+        .footer-socials { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+        .footer-socials a {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-socials a:hover {
+            background: rgba(0,191,255,0.3);
+            border-color: rgba(0,191,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,191,255,0.25);
+        }
+        .kres-footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 0.55rem;
+            text-align: center;
+        }
+        .kres-footer-bottom p {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .kres-footer {
+                padding: 1rem 1rem 0.6rem;
+            }
+            .kres-footer-inner {
+                grid-template-columns: 1fr !important;
+                gap: 0.85rem;
+            }
+            .kres-footer-brand,
+            .kres-footer-col {
+                padding-left: 0;
+                width: 100%;
+            }
+            .kres-footer-brand p {
+                font-size: 0.75rem;
+            }
+            .kres-footer-col h4 {
+                font-size: 0.67rem;
+                margin-bottom: 0.35rem;
+            }
+            .kres-footer-col ul li a {
+                font-size: 0.78rem;
+            }
+            .kres-footer-col ul li {
+                margin-bottom: 0.22rem;
+            }
+            .footer-socials { gap: 0.4rem; }
+            .footer-socials a {
+                width: 30px; height: 30px;
+                font-size: 0.82rem;
+            }
+            .kres-footer-bottom p {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Parallax Background -->
+<div class="parallax-bg"></div>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <div class="logo-img-container">
+                <img src="static/images/logo.png" class="logo-img" alt="Logo">
+            </div>
+            <span class="logo-text">KRES PRESENTS</span>
+        </a>
+        <!-- Hamburger -->
+        <button class="hamburger" id="kresHamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-right">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="reviews.html" class="nav-link active">Reviews</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Reviews Section -->
+<section class="reviews-section">
+    <div class="reviews-heading">
+        <h1>Blooms That Touch Hearts</h1>
+        <p>Beautifully crafted bouquets — loved by hundreds of happy customers</p>
+    </div>
+
+    <div class="carousel-wrapper">
+            <div class="carousel-track-wrap" id="trackWrap">
+                <div class="carousel-track" id="track"></div>
+            </div>
+        </div>
+
+    <div class="dots" id="dots"></div>
+
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-num">4.9 ★</div>
+            <div class="stat-label">Average Rating</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">4000+</div>
+            <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">99%</div>
+            <div class="stat-label">Would Recommend</div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Mobile Drawer -->
+<div class="mobile-overlay" id="kresOverlay"></div>
+<div class="mobile-drawer" id="kresDrawer">
+    <button class="drawer-close" id="kresDrawerClose">&#x2715;</button>
+    <ul>
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="reviews.html" class="nav-link active">Reviews</a></li>
+        <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+    </ul>
+</div>
+
+<script>
+(function(){
+    /* ══ DATA ══ */
+    const REVIEWS = [
+        { name:"Ribbi",    init:"N", color:"#b06ab3", date:"Feb 2026", stars:5, text:"Dugay malanta ang flowwrss!! Nagbutang nalang kos akong cubicle sa office ug flower vase kay wapa gyapon namatay haha ato paning sunday" },
+        { name:"Czarina E.",   init:"C", color:"#3a9bd5", date:"April 2024", stars:5, text:"Good evening po, thank you for making my request po about the bouquet arrangement that I want. It's so pretty, she liked it! 🤍 " },
+        { name:"JAine P.",  init:"A", color:"#c05050", date:"May 2023", stars:5, text:"I just want to say thank you ky nice kaayo ang bouquet nga napili skoa husband given to me last May 11 during our Anniversary 💙 " },
+        { name:"Kristine Andrea B.",  init:"T", color:"#e05e75", date:"July 2024", stars:5, text:"Hello po, I received a beautiful bouquet last night from my boyfriend and it came from your store huhu! the flowers are soooooo pretty, fresh & fragrant!!!!!!" },
+        { name:"Sitami",    init:"L", color:"#e8789a", date:"Feb 2026", stars:5, text:"my significant other actually bought my favorite flowers from your shop & i loved it sooo much, the prettiest flowers i have ever seen. keep on growing po, i wish u Godspeed !! 💌" },
+        { name:"eepyPakaykay",   init:"J", color:"#5aab8a", date:"Feb 2026", stars:5, text:"awiee congrats po 🫶🏻🫶🏻tong na discover namo ang Kres, diha na pirmi gapahimog bouquet akong kuya para saiyang uyab, og papa para sakong mama ✨" },
+        { name:"achi.",   init:"K", color:"#7c63c2", date:"Feb 2026", stars:5, text:"hai, ive been ur buyer since then, didto sa nha kauswagan and giganahan ko and humot ang flowers Hahahaha di jd ko maratol og palit sa flowers kay duol ra! huhu unta dimo mag close didtos nhaaa 🥹😂😂" },
+        { name:"Kristine Andrea B.",   init:"M", color:"#6785b6", date:"July 2024", stars:5, text:"super satisfied client here, I've been stalking your FB page naka inquire gani ko before kay naa koy na gustuhan sainyong bouquet since then sge nako'g padungog Sa akong boyfriend na you ga make mo nice flower bouquet little did I know na sainto diay sya nag order. Didn't expect na in ani ka nice and ka pretty iyang gi pa make. Also, I told him na pag naay mga occasions gusto ko sainyo sya mag order. God bless you po💖" },
+        { name:"Nebz",   init:"M", color:"#40a88a", date:"Feb 2026", stars:5, text:"I had such a great experience with them! I asked if they could redo the arrangement because I wanted a mix of assorted colors instead of just one, and even though their schedule was pretty hectic, they happily made it happen anyway. The tulips were so vibrant and fresh - it's clear they take really good care of their flowers. This is my third time ordering tulips from them, and every single time I've been super satisfied. My girlfriend was absolutely thrilled with the bouquet — she couldn't stop smiling! Big props to the florist for taking the extra time to redo it and make it even more beautiful. Highly recommend!" },
+        { name:"kimchi",   init:"S", color:"#f0a040", date:"Feb 2026", stars:5, text:"A little story time...On the last day of my board exam last Nov 2025 PNLE, my boyfriend went around looking for a flower shop so he could surprise me during the salubong. He's not really familiar with where to go in CDO, and he was starting to run out of options. After searching for a while, he finally found your main shop's address on Facebook and immediately went there, hoping to find something beautiful. He got sad when he found out that the tulips - my favorite flowers — were already reserved to be made into a large bouquet for someone else. Thankfully, your kind florist let him have at least three tulips from the reserved ones. And here they are — my very first tulips, given with so much effort and love, on the last day of my board exam. 🌹 🤍" },
+    ];
+    const N = REVIEWS.length;
+
+    /* ══ ELEMENTS ══ */
+    const track     = document.getElementById('track');
+    const dotsEl    = document.getElementById('dots');
+    const trackWrap = document.getElementById('trackWrap');
+
+    /* ══ STATE ══ */
+    let current   = 0;   // logical index (0..N-1)
+    let offset    = 0;   // current translateX in px
+    let CARD_W    = 0;   // card width
+    let CARD_GAP  = 0;   // margin each side
+    let SLOT      = 0;   // CARD_W + 2*CARD_GAP
+    let CLONE_CNT = 3;   // clones on each end for seamless loop
+
+    let dragging  = false;
+    let dragStartX = 0;
+    let dragStartOffset = 0;
+    let dragDiff  = 0;
+    let pointerDown = false;
+    let autoTimer;
+
+    const TOTAL   = () => N + CLONE_CNT * 2; // total DOM cards
+    const SWIPE_T = 40;
+
+    /* ══ BUILD CARDS ══ */
+    function makeCard(r, extraClass) {
+        const div = document.createElement('div');
+        div.className = 'review-card ' + (extraClass || '');
+        div.innerHTML = `
+            <div class="card-header">
+                <div class="avatar" style="background:${r.color}">${r.init}</div>
+                <div class="reviewer-info">
+                    <span class="reviewer-name">${r.name}</span>
+                    <span class="reviewer-date">${r.date}</span>
+                </div>
+                <div class="stars-badge">
+                    <span>${'★'.repeat(r.stars)}</span>
+                    <span class="rating-num">${r.stars}.0</span>
+                </div>
+            </div>
+            <div class="card-divider"></div>
+            <span class="quote-mark-big">❝</span>
+            <p class="review-text">${r.text}</p>`;
+        return div;
+    }
+
+    // prepend clones (last CLONE_CNT reviews)
+    for (let i = CLONE_CNT - 1; i >= 0; i--) {
+        track.appendChild(makeCard(REVIEWS[(N - 1 - i + N) % N], 'clone-start'));
+    }
+    // real cards
+    REVIEWS.forEach(r => track.appendChild(makeCard(r)));
+    // append clones (first CLONE_CNT reviews)
+    for (let i = 0; i < CLONE_CNT; i++) {
+        track.appendChild(makeCard(REVIEWS[i % N], 'clone-end'));
+    }
+
+    const allCards = () => Array.from(track.children);
+
+    /* ══ DOTS ══ */
+    REVIEWS.forEach((_, i) => {
+        const d = document.createElement('span');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => goTo(i, true));
+        dotsEl.appendChild(d);
+    });
+
+    /* ══ MEASURE ══ */
+    function measure() {
+        const c = track.children[CLONE_CNT]; // first real card
+        const cs = getComputedStyle(c);
+        CARD_GAP = parseFloat(cs.marginLeft);
+        CARD_W   = c.offsetWidth;
+        SLOT     = CARD_W + CARD_GAP * 2;
+    }
+
+    /* offset so card at logical index `idx` (in extended array) is centred */
+    function centreOffset(extIdx) {
+        const vpW = trackWrap.offsetWidth;
+        return (vpW / 2) - (extIdx * SLOT) - (SLOT / 2);
+    }
+
+    function extIndex(logicalIdx) {
+        return CLONE_CNT + logicalIdx; // position in DOM array
+    }
+
+    /* ══ APPLY VISUAL CLASSES ══ */
+    function applyClasses() {
+        const ext = extIndex(current);
+        allCards().forEach((card, i) => {
+            card.classList.remove('is-active','is-prev','is-next','is-far');
+            const diff = i - ext;
+            if      (diff ===  0) card.classList.add('is-active');
+            else if (diff === -1) card.classList.add('is-prev');
+            else if (diff ===  1) card.classList.add('is-next');
+            else                  card.classList.add('is-far');
+        });
+        // also apply to clone mirrors
+        // (clone-start last card mirrors current===0 if current===N-1 etc)
+        // handled naturally because DOM order covers them
+    }
+
+    function updateDots() {
+        Array.from(dotsEl.children).forEach((d,i) => d.classList.toggle('active', i === current));
+    }
+
+    /* ══ MOVE (no animation) ══ */
+    function moveTo(px) {
+        track.style.transform = `translateX(${px}px)`;
+        offset = px;
+    }
+
+    /* ══ SLIDE (animated) ══ */
+    function slideTo(px, then) {
+        track.classList.add('animating');
+        moveTo(px);
+        function onEnd() {
+            track.classList.remove('animating');
+            track.removeEventListener('transitionend', onEnd);
+            if (then) then();
+        }
+        track.addEventListener('transitionend', onEnd);
+    }
+
+    /* ══ GO TO logical index (with loop wrap) ══ */
+    function goTo(idx, animated) {
+        current = ((idx % N) + N) % N;
+        const target = centreOffset(extIndex(current));
+        applyClasses();
+        updateDots();
+        if (animated) {
+            slideTo(target);
+        } else {
+            moveTo(target);
+        }
+        resetAuto();
+    }
+
+    /* ══ ADVANCE one step with infinite loop ══ */
+    function step(dir) {
+        // dir: +1 = forward, -1 = back
+        const nextLogical = ((current + dir) % N + N) % N;
+        // decide whether to go via clone for smooth loop
+        const nextExt = extIndex(current) + dir;
+        const target  = centreOffset(nextExt);
+
+        track.classList.add('animating');
+        moveTo(target);
+
+        function onEnd() {
+            track.classList.remove('animating');
+            track.removeEventListener('transitionend', onEnd);
+            // silently jump to real card
+            current = nextLogical;
+            moveTo(centreOffset(extIndex(current)));
+            applyClasses();
+            updateDots();
+        }
+        track.addEventListener('transitionend', onEnd);
+        resetAuto();
+    }
+
+    /* ══ AUTO-PLAY ══ */
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => step(+1), 4200);
+    }
+
+    /* ══ CLICK adjacent cards ══ */
+    track.addEventListener('click', e => {
+        if (dragging) return;
+        const card = e.target.closest('.review-card');
+        if (!card) return;
+        if (card.classList.contains('is-prev')) step(-1);
+        if (card.classList.contains('is-next')) step(+1);
+    });
+
+    /* ══ DRAG / TOUCH ══ */
+    function onDown(x) {
+        pointerDown = true;
+        dragging    = false;
+        dragStartX  = x;
+        dragStartOffset = offset;
+        dragDiff    = 0;
+        track.classList.remove('animating');
+        clearInterval(autoTimer);
+        trackWrap.classList.add('is-dragging');
+    }
+    function onMove(x) {
+        if (!pointerDown) return;
+        dragDiff = x - dragStartX;
+        if (Math.abs(dragDiff) > 6) dragging = true;
+        if (dragging) moveTo(dragStartOffset + dragDiff);
+    }
+    function onUp() {
+        if (!pointerDown) return;
+        pointerDown = false;
+        trackWrap.classList.remove('is-dragging');
+        if (!dragging) { resetAuto(); return; }
+        dragging = false;
+        if      (dragDiff < -SWIPE_T) step(+1);
+        else if (dragDiff >  SWIPE_T) step(-1);
+        else    goTo(current, true);
+    }
+
+    trackWrap.addEventListener('mousedown',  e => onDown(e.clientX));
+    window.addEventListener   ('mousemove',  e => onMove(e.clientX));
+    window.addEventListener   ('mouseup',    onUp);
+
+    trackWrap.addEventListener('touchstart', e => onDown(e.touches[0].clientX), { passive: true });
+    trackWrap.addEventListener('touchmove',  e => { onMove(e.touches[0].clientX); }, { passive: true });
+    trackWrap.addEventListener('touchend',   onUp);
+
+    /* ══ KEYBOARD ══ */
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  step(-1);
+        if (e.key === 'ArrowRight') step(+1);
+    });
+
+    /* ══ INIT ══ */
+    function init() {
+        measure();
+        moveTo(centreOffset(extIndex(current)));
+        applyClasses();
+        updateDots();
+        resetAuto();
+    }
+
+    window.addEventListener('resize', () => {
+        measure();
+        moveTo(centreOffset(extIndex(current)));
+    });
+
+    if (document.readyState === 'complete') { init(); }
+    else { window.addEventListener('load', init); }
+})();
+</script>
+
+<!-- Mobile Drawer Script -->
+<script>
+(function(){
+    var btn     = document.getElementById('kresHamburger');
+    var drawer  = document.getElementById('kresDrawer');
+    var overlay = document.getElementById('kresOverlay');
+    var closeBtn= document.getElementById('kresDrawerClose');
+    if(!btn||!drawer) return;
+
+    function open(){
+        btn.classList.add('open');
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow='hidden';
+    }
+    function close(){
+        btn.classList.remove('open');
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow='';
+    }
+    btn.addEventListener('click', function(){ drawer.classList.contains('open') ? close() : open(); });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    if(overlay)  overlay.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+    drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
+
+            <!-- ===== KRES FOOTER ===== -->
+    <footer class="kres-footer">
+        <div class="kres-footer-inner">
+
+            <!-- Brand -->
+            <div class="kres-footer-brand">
+                <a href="index.html" class="footer-logo">
+                    <div class="footer-logo-circle">
+                        <img src="static/images/logo.png" alt="KRES Logo">
+                    </div>
+                    <span class="footer-brand-name">KRES Presents</span>
+                </a>
+                <p>Wrapped in bows, filled with blooms.<br>Thoughtfully handcrafted floral arrangements, created with love and beautifully presented to you.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="kres-footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blooms.html">Blooms</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Our Offerings -->
+            <div class="kres-footer-col">
+                <h4>Our Offerings</h4>
+                <ul>
+                    <li><a href="shop.html">Bouquets</a></li>
+                    <li><a href="shop.html">Arrangements</a></li>
+                    <li><a href="shop.html">Gift Sets</a></li>
+                    <li><a href="blooms.html">Seasonal Blooms</a></li>
+                    <li><a href="shop.html">Custom Orders</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="kres-footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/kres.co" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@kres.co2?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="tel:+639970682324" aria-label="Phone"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="kres-footer-bottom">
+            <p>&copy; 2025 KRES Co. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ===== END FOOTER ===== -->
+
+</body>
+</html>

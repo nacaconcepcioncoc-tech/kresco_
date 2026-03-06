@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRES PRESENTS</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* VIBRANT BLUE GLOW */
+        @keyframes electricGlow {
+            0% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
+            50% { box-shadow: 0 5px 25px rgba(0, 191, 255, 0.7), 0 0 40px rgba(0, 0, 255, 0.5); }
+            100% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
+        }
+
+
+        /* QUICK SNAPPY WIGGLE EVERY 10 SECONDS */
+        @keyframes wiggleAttention {
+            0%, 94%, 100% { transform: scale(1) rotate(0deg); }
+            95% { transform: scale(1.08) rotate(3deg); }
+            96% { transform: scale(1.08) rotate(-3deg); }
+            97% { transform: scale(1.08) rotate(3deg); }
+            98% { transform: scale(1.08) rotate(-3deg); }
+            99% { transform: scale(1.08) rotate(0deg); }
+        }
+
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #6785b6;
+            overflow-x: hidden;
+        }
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; }
+
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 97%;
+            max-width: 1500px;
+            z-index: 1000;
+            background: rgba(103, 133, 182, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 3.5rem;
+            display: flex;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .logo-img-container {
+            width: 50px; height: 50px;
+            background-color: white;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; overflow: hidden; border: 2px solid white;
+        }
+        .logo-img { width: 118%; height: 118%; object-fit: cover; }
+        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+
+
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-menu { display: flex; list-style: none; gap: 0rem; align-items: center; }
+       
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: inline-block;
+        }
+
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+       
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* --- HERO --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* ↓ CHANGE ONLY THIS FILE PATH to update the background on ALL screen sizes */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)) center 35% / cover no-repeat scroll, url("static/images/background.jpg") center 35% / cover no-repeat scroll;
+            overflow: hidden;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-top: 160px;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+
+        .hero-title {
+            color: white;
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* --- BUTTON --- */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 45px;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            margin-bottom: 3rem;
+            animation: electricGlow 3s infinite ease-in-out, wiggleAttention 10s infinite;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            filter: brightness(1.2);
+            animation: electricGlow 1s infinite ease-in-out; /* Pure glow on hover */
+        }
+
+
+        /* --- SOCIAL LINKS --- */
+        .social-links { display: flex; flex-direction: column; gap: 0.8rem; align-items: center; margin-bottom: 40px; }
+        .social-link { color: white; text-decoration: none; font-size: 1.3rem; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .social-link:hover { color: #00BFFF; transform: scale(1.1); }
+       
+
+
+
+        @media (max-width: 992px) {
+            .hero-title { font-size: 3rem; }
+        }
+
+        /* ── HAMBURGER BUTTON ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 1200;
+            flex-shrink: 0;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.35s ease;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+        /* ── OVERLAY ── */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 1050;
+        }
+        .mobile-overlay.open { display: block; }
+
+        /* ── SIDE DRAWER ── */
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 270px;
+            height: 100%;
+            background: rgba(20, 40, 90, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            padding: 80px 24px 40px;
+            transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -4px 0 30px rgba(0,0,0,0.4);
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer ul {
+            list-style: none;
+            margin: 0; padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mobile-drawer .nav-link {
+            display: block;
+            font-size: 1.05rem;
+            padding: 13px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+        .mobile-drawer .nav-link:hover,
+        .mobile-drawer .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+        .drawer-close {
+            position: absolute;
+            top: 18px; right: 18px;
+            background: rgba(255,255,255,0.1);
+            border: none; color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .drawer-close:hover { background: rgba(255,255,255,0.25); }
+
+        /* ── MOBILE BREAKPOINT ── */
+        @media (max-width: 768px) {
+            .hamburger { display: flex !important; }
+            .nav-right  { display: none !important; }
+            .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
+            .hero {
+                background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)) center center / cover no-repeat scroll, url("static/images/background.jpg") center center / cover no-repeat scroll;
+            }
+        }
+
+
+                        /* --- FOOTER --- */
+        .kres-footer {
+            background: #1a2a4a;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Montserrat', sans-serif;
+            padding: 1rem 1.5rem 0.6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .kres-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 0.9fr;
+            gap: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: start;
+        }
+        .kres-footer-brand .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        .kres-footer-brand .footer-logo-circle {
+            width: 34px; height: 34px;
+            background: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .kres-footer-brand .footer-logo-circle img {
+            width: 118%; height: 118%; object-fit: cover;
+        }
+        .kres-footer-brand .footer-brand-name {
+            color: white;
+            font-family: "Times New Roman", serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .kres-footer-brand p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .kres-footer-col {
+            padding-left: 0.5rem;
+        }
+        .kres-footer-col h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 0.6rem;
+        }
+        .kres-footer-col ul { list-style: none; padding: 0; margin: 0; }
+        .kres-footer-col ul li { margin-bottom: 0.3rem; }
+        .kres-footer-col ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .kres-footer-col ul li a:hover {
+            color: #00BFFF;
+            transform: translateX(4px);
+        }
+        .footer-socials { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+        .footer-socials a {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-socials a:hover {
+            background: rgba(0,191,255,0.3);
+            border-color: rgba(0,191,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,191,255,0.25);
+        }
+        .kres-footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 0.55rem;
+            text-align: center;
+        }
+        .kres-footer-bottom p {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .kres-footer {
+                padding: 1rem 1rem 0.6rem;
+            }
+            .kres-footer-inner {
+                grid-template-columns: 1fr !important;
+                gap: 0.85rem;
+            }
+            .kres-footer-brand,
+            .kres-footer-col {
+                padding-left: 0;
+                width: 100%;
+            }
+            .kres-footer-brand p {
+                font-size: 0.75rem;
+            }
+            .kres-footer-col h4 {
+                font-size: 0.67rem;
+                margin-bottom: 0.35rem;
+            }
+            .kres-footer-col ul li a {
+                font-size: 0.78rem;
+            }
+            .kres-footer-col ul li {
+                margin-bottom: 0.22rem;
+            }
+            .footer-socials { gap: 0.4rem; }
+            .footer-socials a {
+                width: 30px; height: 30px;
+                font-size: 0.82rem;
+            }
+            .kres-footer-bottom p {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-img-container">
+                    <img src="static/images/logo.png" class="logo-img" alt="Logo">
+                </div>
+                <span class="logo-text">KRES PRESENTS</span>
+            </a>
+           
+            <!-- Hamburger -->
+            <button class="hamburger" id="kresHamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Wrapped in Bows.<br>Filled with Blooms.</h1>
+           
+            <a href="shop.html" class="cta-button">
+                <i class="fas fa-store"></i> Browse Our Collections
+            </a>
+           
+            <div class="social-links">
+                <a href="https://www.instagram.com/kres.co" class="social-link" target="_blank"><i class="fab fa-instagram"></i><span>@KRES Co.</span></a>
+                <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" class="social-link" target="_blank"><i class="fab fa-facebook"></i><span>@KRES Presents</span></a>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+            <!-- ===== KRES FOOTER ===== -->
+    <footer class="kres-footer">
+        <div class="kres-footer-inner">
+
+            <!-- Brand -->
+            <div class="kres-footer-brand">
+                <a href="index.html" class="footer-logo">
+                    <div class="footer-logo-circle">
+                        <img src="static/images/logo.png" alt="KRES Logo">
+                    </div>
+                    <span class="footer-brand-name">KRES Presents</span>
+                </a>
+                <p>Wrapped in bows, filled with blooms.<br>Thoughtfully handcrafted floral arrangements, created with love and beautifully presented to you.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="kres-footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blooms.html">Blooms</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Our Offerings -->
+            <div class="kres-footer-col">
+                <h4>Our Offerings</h4>
+                <ul>
+                    <li><a href="shop.html">Bouquets</a></li>
+                    <li><a href="shop.html">Arrangements</a></li>
+                    <li><a href="shop.html">Gift Sets</a></li>
+                    <li><a href="blooms.html">Seasonal Blooms</a></li>
+                    <li><a href="shop.html">Custom Orders</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="kres-footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/kres.co" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@kres.co2?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="tel:+639970682324" aria-label="Phone"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="kres-footer-bottom">
+            <p>&copy; 2025 KRES Co. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ===== END FOOTER ===== -->
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="kresOverlay"></div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="kresDrawer">
+        <button class="drawer-close" id="kresDrawerClose" aria-label="Close menu">&#x2715;</button>
+        <ul>
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+    </div>
+
+
+    <script>
+    (function(){
+        var btn     = document.getElementById('kresHamburger');
+        var drawer  = document.getElementById('kresDrawer');
+        var overlay = document.getElementById('kresOverlay');
+        var closeBtn= document.getElementById('kresDrawerClose');
+        if(!btn||!drawer) return;
+
+        function open(){
+            btn.classList.add('open');
+            drawer.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow='hidden';
+        }
+        function close(){
+            btn.classList.remove('open');
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow='';
+        }
+        btn.addEventListener('click', function(){ drawer.classList.contains('open') ? close() : open(); });
+        if(closeBtn) closeBtn.addEventListener('click', close);
+        if(overlay)  overlay.addEventListener('click', close);
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+        drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+    })();
+    </script>
+
+</body>
+</html>
