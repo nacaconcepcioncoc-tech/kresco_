@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRES PRESENTS - Chat with Us</title>
+    <title>KRES Co. - Chat with Us</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -41,7 +41,7 @@
         .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
         .logo-img-container { width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
         .logo-img { width: 118%; height: 118%; object-fit: cover; }
-        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; letter-spacing: 2px; }
         .nav-right { display: flex; align-items: center; gap: 1rem; }
         .nav-menu { display: flex; list-style: none; gap: 0.3rem; align-items: center; }
         .nav-link { color: rgba(255, 255, 255, 0.9); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 8px 20px; border-radius: 30px; transition: all 0.4s; }
@@ -514,7 +514,7 @@
                 <div class="logo-img-container">
                     <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
                 </div>
-                <span class="logo-text">KRES PRESENTS</span>
+                <span class="logo-text">KRES Co.</span>
             </a>
            
             <!-- Hamburger -->
@@ -527,6 +527,7 @@
                     <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
                     <li><a href="{% url 'blooms' %}" class="nav-link">Blooms</a></li>
                     <li><a href="{% url 'shop' %}" class="nav-link">Shop</a></li>
+                     <li><a href="{% url 'reviews' %}" class="nav-link">Reviews</a></li>
                     <li><a href="{% url 'contact' %}" class="nav-link">Contact Us</a></li>
                 </ul>
             </div>
@@ -544,7 +545,7 @@
                             <img src="{% static 'images/logo.png' %}" alt="KRES">
                         </div>
                         <div class="header-info">
-                            <h2>KRES PRESENTS</h2>
+                            <h2>KRES Co.</h2>
                             <p><span class="online-dot"></span> Online - Typically replies instantly</p>
                         </div>
                     </div>
@@ -703,7 +704,7 @@ We're here to help you create something beautiful! 💐`;
                     <div class="footer-logo-circle">
                         <img src="{% static 'images/logo.png' %}" alt="KRES Logo">
                     </div>
-                    <span class="footer-brand-name">KRES Presents</span>
+                    <span class="footer-brand-name">KRES Co.</span>
                 </a>
                 <p>Wrapped in bows, filled with blooms.<br>Thoughtfully handcrafted floral arrangements, created with love and beautifully presented to you.</p>
             </div>
