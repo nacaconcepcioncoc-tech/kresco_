@@ -4,3 +4,5 @@ python build_static.py — rebuild the static site
 git add . — stage changes
 git commit -m "..." — commit
 git push — push to GitHub (site auto-updates)
+
+Edit templates → Run build_static.py → git add . → git commit → git push
