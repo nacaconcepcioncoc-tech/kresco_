@@ -404,80 +404,28 @@
         }
 
         .partners-section {
-            background: linear-gradient(135deg, #f9f4f0 0%, #f0eaf4 50%, #eaf0f8 100%);
+            background: #f9f4f0;
             padding: 1.6rem 0 1.4rem;
             overflow: hidden;
             position: relative;
-            border-top: 1px solid rgba(103,133,182,0.12);
-            border-bottom: 1px solid rgba(103,133,182,0.12);
-        }
-
-        /* Soft decorative petal accents */
-        .partners-section::before,
-        .partners-section::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.07;
-        }
-        .partners-section::before {
-            width: 320px; height: 320px;
-            background: radial-gradient(circle, #a78fbf 0%, transparent 70%);
-            top: -80px; left: -60px;
-        }
-        .partners-section::after {
-            width: 260px; height: 260px;
-            background: radial-gradient(circle, #6785b6 0%, transparent 70%);
-            bottom: -70px; right: -40px;
         }
 
         .partners-heading {
             text-align: center;
-            margin-bottom: 1.1rem;
+            margin-bottom: 1.2rem;
             position: relative;
             z-index: 1;
         }
-        .partners-heading .eyebrow {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #8a9dc0;
-            margin-bottom: 0.3rem;
-        }
         .partners-heading h2 {
             font-family: "Times New Roman", serif;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 400;
-            color: #3a4a6a;
-            letter-spacing: 1px;
-            margin: 0 0 0.5rem;
-        }
-        .partners-heading .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 0 auto;
-        }
-        .partners-heading .divider-line {
-            width: 48px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #a78fbf);
-        }
-        .partners-heading .divider-line.right {
-            background: linear-gradient(90deg, #a78fbf, transparent);
-        }
-        .partners-heading .divider-bloom {
-            font-size: 0.8rem;
-            color: #a78fbf;
-            opacity: 0.8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(58, 74, 106, 0.5);
+            margin: 0;
         }
 
-        /* Fade-out masks on left & right edges */
         .partners-track-wrapper {
             position: relative;
             z-index: 1;
@@ -488,7 +436,7 @@
             content: '';
             position: absolute;
             top: 0; bottom: 0;
-            width: 120px;
+            width: 80px;
             z-index: 2;
             pointer-events: none;
         }
@@ -498,7 +446,7 @@
         }
         .partners-track-wrapper::after {
             right: 0;
-            background: linear-gradient(270deg, #eaf0f8, transparent);
+            background: linear-gradient(270deg, #f9f4f0, transparent);
         }
 
         .partners-track {
@@ -517,73 +465,36 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 150px;
-            height: 68px;
-            margin: 0 20px;
+            margin: 0 30px;
             flex-shrink: 0;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.72);
-            border: 1px solid rgba(167, 143, 191, 0.18);
-            box-shadow: 0 2px 16px rgba(103,133,182,0.07), 0 1px 4px rgba(103,133,182,0.05);
-            transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
-            overflow: hidden;
-            position: relative;
-            backdrop-filter: blur(6px);
+            transition: transform 0.3s ease;
         }
         .partner-logo-slot:hover {
-            transform: translateY(-4px) scale(1.04);
-            box-shadow: 0 8px 28px rgba(103,133,182,0.18), 0 2px 8px rgba(103,133,182,0.1);
-            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.08);
         }
 
-        /* Placeholder state — shown when no real logo is set */
-        .partner-logo-slot .logo-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            height: 100%;
-        }
-        .partner-logo-slot .logo-placeholder .logo-icon {
-            font-size: 1.4rem;
-            color: #b8c8e0;
-        }
-        .partner-logo-slot .logo-placeholder .logo-label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #b8c8e0;
-        }
-
-        /* Real logo image (shown when src is provided) */
         .partner-logo-slot img.partner-img {
-            max-width: 130px;
-            max-height: 60px;
+            max-width: 140px;
+            max-height: 55px;
             width: auto;
             height: auto;
             object-fit: contain;
-            filter: grayscale(30%) opacity(0.75);
-            transition: filter 0.35s ease;
-        }
-        .partner-logo-slot:hover img.partner-img {
-            filter: grayscale(0%) opacity(1);
+            filter: none;
+            transition: transform 0.3s ease;
         }
 
         /* ── Carousel responsive ── */
         @media (max-width: 768px) {
-            .partners-section { padding: 1.2rem 0 1rem; }
-            .partners-heading h2 { font-size: 1rem; }
-            .partner-logo-slot { width: 120px; height: 56px; margin: 0 14px; }
-            .partner-logo-slot img.partner-img { max-width: 90px; max-height: 38px; }
+            .partners-section { padding: 0.7rem 0 0.6rem; }
+            .partners-heading h2 { font-size: 0.7rem; }
+            .partner-logo-slot { margin: 0 20px; }
+            .partner-logo-slot img.partner-img { max-width: 110px; max-height: 45px; }
             .partners-track-wrapper::before,
-            .partners-track-wrapper::after { width: 60px; }
+            .partners-track-wrapper::after { width: 40px; }
         }
         @media (max-width: 480px) {
-            .partner-logo-slot { width: 100px; height: 50px; margin: 0 10px; border-radius: 8px; }
+            .partner-logo-slot { margin: 0 14px; }
+            .partner-logo-slot img.partner-img { max-width: 90px; max-height: 38px; }
         }
         /* ===== END PARTNERS CAROUSEL ===== */
 
@@ -676,13 +587,7 @@
     <section class="partners-section">
 
         <div class="partners-heading">
-            <span class="eyebrow">Trusted By</span>
-            <h2>Our Collaborators &amp; Partners</h2>
-            <div class="divider">
-                <span class="divider-line"></span>
-                <span class="divider-bloom">&#10047;</span>
-                <span class="divider-line right"></span>
-            </div>
+            <h2>Brands We've Worked With</h2>
         </div>
 
         <div class="partners-track-wrapper">
@@ -725,19 +630,21 @@
     <!-- ===== END PARTNERS CAROUSEL ===== -->
 
     <script>
-    /* ── Infinite-loop: duplicate the track content once via JS ── */
+    /* ── Infinite-loop: duplicate items enough times for seamless scroll ── */
     (function(){
         var track = document.getElementById('partnersTrack');
         if (!track) return;
-        var clone = track.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        /* Append cloned items into the same track (not a second track) */
-        Array.from(clone.children).forEach(function(child){
-            track.appendChild(child.cloneNode(true));
-        });
-        /* Adjust animation duration so speed stays consistent regardless of count */
-        var totalItems = track.children.length;
-        var duration = Math.max(20, totalItems * 3.5);
+        var origItems = Array.from(track.children);
+        /* Clone items 3 times to ensure no gaps during scroll */
+        for (var i = 0; i < 3; i++) {
+            origItems.forEach(function(child){
+                var cl = child.cloneNode(true);
+                cl.setAttribute('aria-hidden', 'true');
+                track.appendChild(cl);
+            });
+        }
+        /* Speed: consistent pixel rate regardless of item count */
+        var duration = Math.max(20, origItems.length * 4);
         track.style.animationDuration = duration + 's';
     })();
     </script>
