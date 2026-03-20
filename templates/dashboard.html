@@ -4,28 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRES PRESENTS</title>
-   
+    <title>KRES PRESENTS - Flowers & Bouquets</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
 
 
     <style>
+        /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-        /* VIBRANT BLUE GLOW */
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @keyframes electricGlow {
             0% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
             50% { box-shadow: 0 5px 25px rgba(0, 191, 255, 0.7), 0 0 40px rgba(0, 0, 255, 0.5); }
             100% { box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4), 0 0 20px rgba(0, 0, 255, 0.2); }
         }
 
-
-        /* QUICK SNAPPY WIGGLE EVERY 10 SECONDS */
         @keyframes wiggleAttention {
             0%, 94%, 100% { transform: scale(1) rotate(0deg); }
             95% { transform: scale(1.08) rotate(3deg); }
@@ -35,22 +41,37 @@
             99% { transform: scale(1.08) rotate(0deg); }
         }
 
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #6785b6;
-            overflow-x: hidden;
+        @keyframes scrollLeft {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
+        @keyframes priceGlow {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(34, 139, 34, 0.6); }
+            50% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 30px rgba(34, 139, 34, 0.9); }
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; }
+        /* ===== GLOBAL STYLES ===== */
+        html {
+            scroll-behavior: smooth;
+        }
 
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
 
-        /* --- NAVBAR --- */
+        body { 
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
+                        url("{% static 'images/background-flowers.jpg' %}");
+            background-attachment: fixed;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* ===== NAVBAR --- FIXED & DYNAMIC ===== */
         .navbar {
             position: fixed;
             top: 15px;
@@ -67,8 +88,8 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             animation: fadeInUp 0.8s ease-out forwards;
+            transition: all 0.3s ease;
         }
-
 
         .nav-container {
             width: 100%;
@@ -77,21 +98,57 @@
             align-items: center;
         }
 
-
-        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
-        .logo-img-container {
-            width: 50px; height: 50px;
-            background-color: white;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; overflow: hidden; border: 2px solid white;
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            text-decoration: none;
+            cursor: pointer;
         }
-        .logo-img { width: 118%; height: 118%; object-fit: cover; }
-        .logo-text { color: white; font-family: "Times New Roman", serif; font-size: 1.2rem; letter-spacing: 2px; }
 
+        .logo-img-container {
+            width: 50px; 
+            height: 50px;
+            background-color: white;
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            overflow: hidden; 
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+        }
 
-        .nav-right { display: flex; align-items: center; gap: 1rem; }
-        .nav-menu { display: flex; list-style: none; gap: 0rem; align-items: center; }
-       
+        .logo:hover .logo-img-container {
+            transform: scale(1.05);
+        }
+
+        .logo-img { 
+            width: 118%; 
+            height: 118%; 
+            object-fit: cover; 
+        }
+
+        .logo-text { 
+            color: white; 
+            font-family: "Times New Roman", serif; 
+            font-size: 1.2rem; 
+            letter-spacing: 2px; 
+        }
+
+        .nav-right { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+        }
+
+        .nav-menu { 
+            display: flex; 
+            list-style: none; 
+            gap: 0rem; 
+            align-items: center; 
+        }
+
         .nav-link {
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
@@ -102,8 +159,8 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             display: inline-block;
+            cursor: pointer;
         }
-
 
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -112,7 +169,7 @@
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
-       
+
         .nav-link.active {
             background: rgba(255, 255, 255, 0.25);
             color: white;
@@ -400,8 +457,8 @@
         }
         /* ===== PARTNERS CAROUSEL ===== */
         @keyframes scrollLeft {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
         }
 
         .partners-section {
@@ -455,7 +512,7 @@
             align-items: center;
             gap: 0;
             width: max-content;
-            animation: scrollLeft 28s linear infinite;
+            animation: scrollLeft var(--carousel-duration, 40s) linear infinite;
             will-change: transform;
         }
         .partners-track:hover {
@@ -624,6 +681,26 @@
                     <img class="partner-img" src="{% static 'images/partner-6.png' %}" alt="Partner 6">
                 </div>
 
+                <!-- SLOT 7 → save your file as: images/partner-7.png -->
+                <div class="partner-logo-slot">
+                    <img class="partner-img" src="{% static 'images/partner-7.png' %}" alt="Partner 7">
+                </div>
+
+                <!-- SLOT 8 → save your file as: images/partner-8.png -->
+                <div class="partner-logo-slot">
+                    <img class="partner-img" src="{% static 'images/partner-8.png' %}" alt="Partner 8">
+                </div>
+
+                <!-- SLOT 9 → save your file as: images/partner-9.png -->
+                <div class="partner-logo-slot">
+                    <img class="partner-img" src="{% static 'images/partner-9.png' %}" alt="Partner 9">
+                </div>
+
+                <!-- SLOT 10 → save your file as: images/partner-10.png -->
+                <div class="partner-logo-slot">
+                    <img class="partner-img" src="{% static 'images/partner-10.png' %}" alt="Partner 10">
+                </div>
+
             </div><!-- /.partners-track -->
         </div><!-- /.partners-track-wrapper -->
 
@@ -631,22 +708,30 @@
     <!-- ===== END PARTNERS CAROUSEL ===== -->
 
     <script>
-    /* ── Infinite-loop: duplicate items enough times for seamless scroll ── */
+    /* ── Smooth infinite-loop: seamless carousel ── */
     (function(){
         var track = document.getElementById('partnersTrack');
         if (!track) return;
         var origItems = Array.from(track.children);
-        /* Clone items 3 times to ensure no gaps during scroll */
-        for (var i = 0; i < 3; i++) {
-            origItems.forEach(function(child){
-                var cl = child.cloneNode(true);
-                cl.setAttribute('aria-hidden', 'true');
-                track.appendChild(cl);
-            });
-        }
-        /* Speed: consistent pixel rate regardless of item count */
-        var duration = Math.max(20, origItems.length * 4);
-        track.style.animationDuration = duration + 's';
+        var itemCount = origItems.length;
+        
+        /* Clone items ONCE to create seamless loop */
+        origItems.forEach(function(child){
+            var cl = child.cloneNode(true);
+            cl.setAttribute('aria-hidden', 'true');
+            track.appendChild(cl);
+        });
+        
+        /* Calculate smooth duration based on item width */
+        setTimeout(function(){
+            var firstItem = track.children[0];
+            var itemWidth = firstItem.offsetWidth + 60; /* 30px margin left + 30px right */
+            var totalWidth = itemWidth * itemCount;
+            /* Speed: pixels per second (adjust for faster/slower) */
+            var speed = 40; /* pixels per second */
+            var duration = totalWidth / speed;
+            track.style.setProperty('--carousel-duration', duration + 's');
+        }, 0);
     })();
     </script>
 

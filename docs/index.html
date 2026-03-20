@@ -295,7 +295,7 @@
         }
 
 
-                        /* --- FOOTER --- */
+        /* --- FOOTER --- */
         .kres-footer {
             background: #1a2a4a;
             color: rgba(255, 255, 255, 0.9);
@@ -399,8 +399,8 @@
         }
         /* ===== PARTNERS CAROUSEL ===== */
         @keyframes scrollLeft {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
         }
 
         .partners-section {
@@ -454,7 +454,7 @@
             align-items: center;
             gap: 0;
             width: max-content;
-            animation: scrollLeft 28s linear infinite;
+            animation: scrollLeft var(--carousel-duration, 40s) linear infinite;
             will-change: transform;
         }
         .partners-track:hover {
@@ -629,6 +629,8 @@
     </section>
     <!-- ===== END PARTNERS CAROUSEL ===== -->
 
+
+
     <script>
     /* ── Infinite-loop: duplicate items enough times for seamless scroll ── */
     (function(){
@@ -725,13 +727,39 @@
 
 
     <script>
+    /* PARTNERS CAROUSEL: Smooth infinite-loop */
     (function(){
-        var btn     = document.getElementById('kresHamburger');
-        var drawer  = document.getElementById('kresDrawer');
-        var overlay = document.getElementById('kresOverlay');
-        var closeBtn= document.getElementById('kresDrawerClose');
-        if(!btn||!drawer) return;
+        var track = document.getElementById('partnersTrack');
+        if (!track) return;
+        var origItems = Array.from(track.children);
+        var itemCount = origItems.length;
+        
+        /* Clone items ONCE to create seamless loop */
+        origItems.forEach(function(child){
+            var cl = child.cloneNode(true);
+            cl.setAttribute('aria-hidden', 'true');
+            track.appendChild(cl);
+        });
+        
+        /* Calculate smooth duration based on item width */
+        setTimeout(function(){
+            var firstItem = track.children[0];
+            var itemWidth = firstItem.offsetWidth + 60; /* 30px margin left + 30px right */
+            var totalWidth = itemWidth * itemCount;
+            /* Speed: pixels per second (adjust for faster/slower) */
+            var speed = 40; /* pixels per second */
+            var duration = totalWidth / speed;
+            track.style.setProperty('--carousel-duration', duration + 's');
+        }, 0);
+    })();
 
+    /* HAMBURGER MENU */
+    (function(){
+        var btn = document.getElementById('kresHamburger');
+        var drawer = document.getElementById('kresDrawer');
+        var overlay = document.getElementById('kresOverlay');
+        var closeBtn = document.getElementById('kresDrawerClose');
+        if(!btn||!drawer) return;
         function open(){
             btn.classList.add('open');
             drawer.classList.add('open');
@@ -746,10 +774,11 @@
         }
         btn.addEventListener('click', function(){ drawer.classList.contains('open') ? close() : open(); });
         if(closeBtn) closeBtn.addEventListener('click', close);
-        if(overlay)  overlay.addEventListener('click', close);
+        if(overlay) overlay.addEventListener('click', close);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
         drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
     })();
+
     </script>
 
 </body>
