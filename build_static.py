@@ -63,10 +63,23 @@ def convert_template(content):
 
 def build():
     """Build the static docs/ folder."""
+    # Save CNAME file if it exists
+    cname_path = os.path.join(DOCS_DIR, 'CNAME')
+    cname_content = None
+    if os.path.exists(cname_path):
+        with open(cname_path, 'r', encoding='utf-8') as f:
+            cname_content = f.read()
+    
     # Clean and recreate docs/
     if os.path.exists(DOCS_DIR):
         shutil.rmtree(DOCS_DIR)
     os.makedirs(DOCS_DIR)
+    
+    # Restore CNAME file
+    if cname_content:
+        with open(cname_path, 'w', encoding='utf-8') as f:
+            f.write(cname_content)
+        print("  Preserved: docs/CNAME")
 
     # Convert and copy HTML templates
     for template_name, output_name in FILE_MAP.items():
