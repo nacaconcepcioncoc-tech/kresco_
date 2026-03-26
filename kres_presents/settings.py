@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-akw!##w!q5tp^x&g+0mzk#q*xg&2^p3*a+cazj#fewbwrzv5vk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # In settings.py
 ALLOWED_HOSTS = [
+    'kresco.xyz',
+    'www.kresco.xyz',
     '192.168.1.42',  # This is the address from your ipconfig
     'localhost',
     '127.0.0.1',
