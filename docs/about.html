@@ -93,6 +93,120 @@
             box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
+        @media (min-width: 993px) {
+            .navbar {
+                top: 20px;
+                left: 0 !important;
+                right: 0;
+                transform: none !important;
+                width: 100%;
+                max-width: none;
+                padding: 0 2.2rem;
+                background: transparent;
+                backdrop-filter: none;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                animation: none;
+                transition: transform 0.35s ease, opacity 0.35s ease;
+                will-change: transform, opacity;
+            }
+
+            .navbar.nav-hidden {
+                transform: translateY(-150%) !important;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .nav-container {
+                display: grid;
+                grid-template-columns: max-content 1fr max-content;
+                align-items: center;
+                column-gap: 2.4rem;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 0;
+            }
+
+            .nav-menu {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                margin: 0;
+                padding: 0.55rem 1.8rem;
+                background: rgba(103, 133, 182, 0.92);
+                border: 1px solid rgba(255, 255, 255, 0.45);
+                border-radius: 999px;
+                box-shadow: 0 8px 22px rgba(21, 35, 64, 0.27);
+            }
+
+            .nav-menu .nav-link {
+                position: relative;
+                padding: 0.2rem 0;
+                background: transparent;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .nav-menu .nav-link::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                width: 100%;
+                height: 2px;
+                background: currentColor;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.25s ease;
+            }
+
+            .nav-menu .nav-link:hover,
+            .nav-menu .nav-link.active {
+                color: #ffffff;
+                background: transparent;
+                box-shadow: none;
+                text-shadow: none;
+                transform: translateY(-1px) scale(1.02);
+            }
+
+            .nav-menu .nav-link:hover::after,
+            .nav-menu .nav-link.active::after {
+                transform: scaleX(1);
+            }
+
+            .nav-cta {
+                padding: 0.58rem 1.35rem;
+                border-radius: 999px;
+                background: rgba(103, 133, 182, 0.28);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.36);
+                box-shadow: 0 8px 18px rgba(28, 43, 78, 0.28);
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .nav-cta::after {
+                display: none;
+            }
+
+            .nav-cta:hover {
+                background: rgba(103, 133, 182, 0.38);
+                transform: translateY(-2px) scale(1.03);
+                box-shadow: 0 10px 20px rgba(28, 43, 78, 0.33);
+                text-shadow: none;
+            }
+
+            .nav-cta.active {
+                background: rgba(103, 133, 182, 0.4);
+                box-shadow: 0 10px 20px rgba(28, 43, 78, 0.33);
+            }
+        }
+
         @media (max-width: 992px) {
             .navbar { padding: 0.3rem 1.5rem; }
             .logo-text { font-size: 1rem; }
@@ -151,7 +265,7 @@
         .btn-blooms {
             display: inline-block;
             padding: 14px 40px;
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            background: linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%);
             color: #ffffff;
             text-decoration: none;
             font-weight: 700;
@@ -162,7 +276,7 @@
         }
         .btn-blooms:hover { 
             transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 15px 40px rgba(0, 210, 255, 0.5), 0 0 30px rgba(0, 210, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(76, 161, 175, 0.4), 0 0 30px rgba(76, 161, 175, 0.25);
         }
 
         /* --- IMAGES --- */
@@ -283,6 +397,7 @@
         @media (max-width: 768px) {
             .hamburger { display: flex !important; }
             .nav-right  { display: none !important; }
+            .nav-cta { display: none !important; }
             .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
         }
 
@@ -530,26 +645,63 @@
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="about.html" class="nav-link active">About</a></li>
-                    <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+                    <li><a href="bestsellers.html" class="nav-link">Bestsellers</a></li>
                     <li><a href="shop.html" class="nav-link">Shop</a></li>
                     <li><a href="reviews.html" class="nav-link">Reviews</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact Us</a></li>
                 </ul>
             </div>
+            <a href="contact.html" class="nav-link nav-cta">Contact Us</a>
         </div>
     </nav>
+    <script>
+        (function () {
+            const navbar = document.querySelector('.navbar');
+            if (!navbar) return;
+            let lastY = window.scrollY;
+            const desktopQuery = window.matchMedia('(min-width: 993px)');
+            const threshold = 8;
+
+            function updateNavbarVisibility() {
+                const currentY = window.scrollY;
+                if (!desktopQuery.matches) {
+                    navbar.classList.remove('nav-hidden');
+                    lastY = currentY;
+                    return;
+                }
+                if (currentY <= 20) {
+                    navbar.classList.remove('nav-hidden');
+                    lastY = currentY;
+                    return;
+                }
+                if (currentY > lastY + threshold) {
+                    navbar.classList.add('nav-hidden');
+                } else if (currentY < lastY - threshold) {
+                    navbar.classList.remove('nav-hidden');
+                }
+                lastY = currentY;
+            }
+
+            window.addEventListener('scroll', updateNavbarVisibility, { passive: true });
+            if (desktopQuery.addEventListener) {
+                desktopQuery.addEventListener('change', updateNavbarVisibility);
+            } else if (desktopQuery.addListener) {
+                desktopQuery.addListener(updateNavbarVisibility);
+            }
+            updateNavbarVisibility();
+        })();
+    </script>
     <main class="about-main">
         <div>
             <h1 class="about-title">Why Choose KRES?</h1>
             <div class="description-box">
                 <p class="desc-text text-bold">At KRES, every bouquet is crafted with purpose.</p>
-                <p class="desc-text">With over 3 years of proven expertise, we guarantee arrangements that speak, standout, and stay fresh longer.</p>
+                <p class="desc-text">With over 6 years of proven expertise, we guarantee arrangements that speak, standout, and stay fresh longer. Beyond bouquets, we host hands-on floral workshops - so you can learn the craft, create something beautiful, and take it home yourself.</p>
                 
                 <ul class="check-list">
                     <li><i class="fas fa-truck"></i> Delivery</li>
                     <li><i class="fas fa-certificate"></i> Premium blooms</li>
                     <li><i class="fas fa-seedling"></i> Custom bouquets</li>
-                    <li><i class="fas fa-comment-dots"></i> 24/7 support</li>
+                    <li><i class="fas fa-comment-dots"></i> Chat support</li>
                 </ul>
                 
                 <span class="desc-footer-bold">Choose KRES today.</span>
@@ -577,13 +729,6 @@
                     window.location.href = 'shop.html';
                 });
             }
-
-            const floatingChatBtn = document.getElementById('floatingChatBtn');
-            if (floatingChatBtn) {
-                floatingChatBtn.addEventListener('click', function() {
-                    window.location.href = 'chatbox.html';
-                });
-            }
         });
     </script>
 
@@ -609,7 +754,7 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
-                    <li><a href="blooms.html">Blooms</a></li>
+                    <li><a href="bestsellers.html">Bestsellers</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="reviews.html">Reviews</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
@@ -623,7 +768,7 @@
                     <li><a href="shop.html">Bouquets</a></li>
                     <li><a href="shop.html">Arrangements</a></li>
                     <li><a href="shop.html">Gift Sets</a></li>
-                    <li><a href="blooms.html">Seasonal Blooms</a></li>
+                    <li><a href="bestsellers.html">Seasonal Blooms</a></li>
                     <li><a href="shop.html">Custom Orders</a></li>
                 </ul>
             </div>
@@ -655,7 +800,7 @@
         <ul>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link active">About</a></li>
-                <li><a href="blooms.html" class="nav-link">Blooms</a></li>
+                <li><a href="bestsellers.html" class="nav-link">Bestsellers</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="reviews.html" class="nav-link">Reviews</a></li>
                 <li><a href="contact.html" class="nav-link">Contact Us</a></li>
