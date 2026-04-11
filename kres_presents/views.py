@@ -7,9 +7,9 @@ def dashboard(request):
 def about(request):
     return render(request, 'about.html')
 
-def blooms(request):
-    # This fixes the "AttributeError: no attribute blooms"
-    return render(request, 'blooms.html')
+def bestsellers(request):
+    # This fixes the "AttributeError: no attribute bestsellers"
+    return render(request, 'bestsellers.html')
 
 def shop(request):
     return render(request, 'shop.html')
@@ -19,9 +19,6 @@ def contact(request):
 
 def cart(request):
     return render(request, 'cart.html')
-
-def chatbox(request):
-    return render(request, 'chatbox.html')
 
 def reviews(request):
     return render(request, 'reviews.html')

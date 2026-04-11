@@ -10,9 +10,8 @@ urlpatterns = [
     
     # These lines MUST exist to stop the NoReverseMatch error
     path('shop/', views.shop, name='shop'),
-    path('blooms/', views.blooms, name='blooms'),
+    path('bestsellers/', views.bestsellers, name='bestsellers'),
     path('contact/', views.contact, name='contact'),
     path('cart/', views.cart, name='cart'),
-    path('chatbox/', views.chatbox, name='chatbox'),
     path('reviews/', views.reviews, name='reviews'),
 ]
