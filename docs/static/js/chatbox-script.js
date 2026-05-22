@@ -1,7 +1,7 @@
 // Bot responses based on keywords
 const getBotResponses = {
     greeting: [
-        "Hello! Welcome to KRES PRESENTS. How can I help you today?",
+        "Hello! Welcome to KRES Co. How can I help you today?",
         "Hi there! 🌸 What can we help you with?",
         "Welcome! Ask us anything about our flowers and services!"
     ],

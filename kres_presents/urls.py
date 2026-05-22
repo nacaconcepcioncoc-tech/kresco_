@@ -14,4 +14,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('cart/', views.cart, name='cart'),
     path('reviews/', views.reviews, name='reviews'),
+    
+    # API endpoints
+    path('api/products/', views.api_products, name='api_products'),
 ]

@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.http import require_http_methods
+from .models import Product
 
 def dashboard(request):
     return render(request, 'dashboard.html')
@@ -22,3 +24,11 @@ def cart(request):
 
 def reviews(request):
     return render(request, 'reviews.html')
+
+@require_http_methods(["GET"])
+def api_products(request):
+    """API endpoint to fetch all products as JSON"""
+    products = Product.objects.all().values(
+        'id', 'name', 'price', 'image', 'flowers', 'fillers', 'available_colors', 'quantity_options'
+    )
+    return JsonResponse(list(products), safe=False)

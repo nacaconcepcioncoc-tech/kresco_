@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amore - Roses Bouquet | KRES Co.</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #E8F4F8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main Product Card */
+        .product-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            position: relative;
+            height: 260px;
+            background: linear-gradient(135deg, #F9EEE8 0%, #E8C9B8 100%);
+            overflow: hidden;
+        }
+
+        /* Radial glow overlay */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .rose-emoji {
+            font-size: 90px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+        }
+
+        /* Hero badges */
+        .hero-badge-left {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #1B8A8F;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .hero-badge-right {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #1B8A8F 0%, #2DACA8 100%);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: white;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* ===== CONTENT SECTIONS ===== */
+        .card-content {
+            padding: 40px 28px;
+        }
+
+        /* Product Header */
+        .product-category {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #1B8A8F;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 500;
+            color: #2C3E50;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .product-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            color: #8E9CA8;
+            margin-bottom: 20px;
+        }
+
+        /* Gradient Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #D0E4E8 50%, transparent 100%);
+            margin: 24px 0;
+        }
+
+        /* ===== SELECT QUANTITY SECTION ===== */
+        .section-label {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #A8BAC4;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #A8BAC4 0%, transparent 100%);
+            margin-left: 12px;
+        }
+
+        .quantity-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quantity-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 14px;
+            background-color: #F7FAFB;
+            border: 1.5px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-row:hover {
+            border-color: #1B8A8F;
+            background-color: #F7FAFB;
+        }
+
+        .quantity-row.selected {
+            border-color: #1B8A8F;
+            background-color: rgba(27, 138, 143, 0.04);
+        }
+
+        .quantity-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2C3E50;
+        }
+
+        .quantity-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1B8A8F;
+        }
+
+        /* ===== FLOWERS & FILLERS ===== */
+        .flowers-fillers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .flower-card {
+            background-color: #F7FAFB;
+            border: 1px solid #E0E8EC;
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: left;
+        }
+
+        .flower-card-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #1B8A8F;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flower-card-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2C3E50;
+        }
+
+        /* ===== COLOR OPTIONS ===== */
+        .color-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #2C3E50;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.active {
+            box-shadow: 0 0 0 3px #1B8A8F, 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-red { background-color: #C0392B; }
+        .color-cream { background-color: #F5F0E8; }
+        .color-light-pink { background-color: #F4A7B9; }
+        .color-fuchsia { background-color: #C2185B; }
+        .color-yellow { background-color: #F9D342; }
+
+        .color-names {
+            font-size: 11px;
+            color: #8E9CA8;
+            text-align: center;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .color-note {
+            font-size: 11px;
+            color: #8E9CA8;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* ===== CUSTOM OPTIONS BOX ===== */
+        .custom-options-box {
+            background: linear-gradient(135deg, rgba(27, 138, 143, 0.06) 0%, rgba(45, 172, 168, 0.04) 100%);
+            border: 1px solid rgba(27, 138, 143, 0.2);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .custom-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .custom-content {
+            flex: 1;
+        }
+
+        .custom-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #1B8A8F;
+            margin-bottom: 6px;
+        }
+
+        .custom-text {
+            font-size: 12px;
+            font-weight: 300;
+            color: #5A6B75;
+            line-height: 1.5;
+        }
+
+        .custom-text a {
+            color: #1B8A8F;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .custom-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .card-content {
+                padding: 32px 22px;
+            }
+
+            .product-name {
+                font-size: 30px;
+            }
+
+            .hero-section {
+                height: 240px;
+            }
+
+            .rose-emoji {
+                font-size: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="product-card">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-badge-left">LR02</div>
+            <div class="hero-badge-right">Fresh</div>
+            <div class="hero-content">
+                <div class="rose-emoji">🌹</div>
+            </div>
+        </div>
+
+        <!-- Card Content -->
+        <div class="card-content">
+            <!-- Product Header -->
+            <div class="product-category">Roses Bouquet</div>
+            <h1 class="product-name">Amore</h1>
+            <p class="product-subtitle">Local Roses with Fillers</p>
+
+            <div class="divider"></div>
+
+            <!-- Select Quantity Section -->
+            <label class="section-label">Select Quantity</label>
+            <div class="quantity-options">
+                <div class="quantity-row" onclick="selectQuantity(this, 1)">
+                    <span class="quantity-label">1 Dozen</span>
+                    <span class="quantity-price">₱699</span>
+                </div>
+                <div class="quantity-row selected" onclick="selectQuantity(this, 2)">
+                    <span class="quantity-label">2 Dozen</span>
+                    <span class="quantity-price">₱1,190</span>
+                </div>
+                <div class="quantity-row" onclick="selectQuantity(this, 3)">
+                    <span class="quantity-label">4 Dozen</span>
+                    <span class="quantity-price">₱1,690</span>
+                </div>
+                <div class="quantity-row" onclick="selectQuantity(this, 4)">
+                    <span class="quantity-label">6 Dozen</span>
+                    <span class="quantity-price">₱2,490</span>
+                </div>
+                <div class="quantity-row" onclick="selectQuantity(this, 5)">
+                    <span class="quantity-label">8 Dozen</span>
+                    <span class="quantity-price">₱3,490</span>
+                </div>
+                <div class="quantity-row" onclick="selectQuantity(this, 6)">
+                    <span class="quantity-label">10 Dozen</span>
+                    <span class="quantity-price">₱4,600</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Flowers & Fillers Section -->
+            <div class="flowers-fillers-grid">
+                <div class="flower-card">
+                    <div class="flower-card-label">🌹 Flowers</div>
+                    <div class="flower-card-value">Local Roses</div>
+                </div>
+                <div class="flower-card">
+                    <div class="flower-card-label">🌿 Fillers</div>
+                    <div class="flower-card-value">Import Fillers</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Rose Color Options -->
+            <h3 class="color-section-title">Rose Color Options</h3>
+            <div class="color-swatches">
+                <div class="color-swatch color-red active" onclick="selectColor(this)" title="Red"></div>
+                <div class="color-swatch color-cream" onclick="selectColor(this)" title="Cream White"></div>
+                <div class="color-swatch color-light-pink" onclick="selectColor(this)" title="Light Pink"></div>
+                <div class="color-swatch color-fuchsia" onclick="selectColor(this)" title="Fuchsia Pink"></div>
+                <div class="color-swatch color-yellow" onclick="selectColor(this)" title="Yellow"></div>
+            </div>
+            <div class="color-names">Red • Cream White • Light Pink • Fuchsia Pink • Yellow</div>
+            <div class="color-note">✨ Wrapper color can also be customized</div>
+
+            <div class="divider"></div>
+
+            <!-- Custom Options Info Box -->
+            <div class="custom-options-box">
+                <div class="custom-icon">💡</div>
+                <div class="custom-content">
+                    <div class="custom-title">Custom Options Available</div>
+                    <p class="custom-text">Want to adjust the colors or add a special touch? Message us on our <a href="#">social media accounts</a> or visit the <a href="#">Contact Us</a> page to place your custom order.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectQuantity(element, quantity) {
+            // Remove selected class from all quantity rows
+            const rows = document.querySelectorAll('.quantity-row');
+            rows.forEach(row => row.classList.remove('selected'));
+            
+            // Add selected class to clicked row
+            element.classList.add('selected');
+        }
+
+        function selectColor(element) {
+            // Remove active class from all color swatches
+            const swatches = document.querySelectorAll('.color-swatch');
+            swatches.forEach(swatch => swatch.classList.remove('active'));
+            
+            // Add active class to clicked swatch
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
