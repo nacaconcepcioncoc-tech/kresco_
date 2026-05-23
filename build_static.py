@@ -21,6 +21,7 @@ URL_MAP = {
     'contact': 'contact.html',
     'chatbox': 'chatbox.html',
     'cart': 'shop.html',  # cart redirects to shop
+    'bestsellers': 'bestsellers.html',
 }
 
 # Mapping: template filename -> output filename
@@ -32,6 +33,7 @@ FILE_MAP = {
     'reviews.html': 'reviews.html',
     'contact.html': 'contact.html',
     'chatbox.html': 'chatbox.html',
+    'bestsellers.html': 'bestsellers.html',
 }
 
 
