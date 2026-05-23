@@ -443,6 +443,11 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.6s ease-out forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .category-card:focus-visible {
@@ -481,6 +486,7 @@
             overflow: hidden;
             background: #f5f5f5;
             display: block;
+            flex-shrink: 0;
         }
 
         .product-image {
@@ -919,6 +925,23 @@
 
         /* ── MOBILE ONLY — shop.html ── */
         @media (max-width: 768px) {
+            body {
+                background: none !important;
+                position: relative;
+                min-height: 100vh;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("static/images/background-flowers.jpg");
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                z-index: -1;
+                pointer-events: none;
+            }
 
             /* Section padding */
             .shop-section {
@@ -1584,12 +1607,12 @@
             // ── CARNATION & ROSES ──
             { id: 25, name: 'LEAH', price: 699, image: 'static/images/product25.jpg', flowers: '1 Carnation', fillers: 'Fillers & Foliage', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], single_price: 699, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 26, name: 'KIA', price: 990, image: 'static/images/product26.jpg', flowers: '2 Carnations, 1 China Rose', fillers: 'Fillers & Foliage', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], single_price: 990, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 27, name: 'HANNAH', price: 1600, image: 'static/images/product27.jpg', flowers: 'Carnations', fillers: 'Gypsophila', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs', '20 pcs'], stems_prices: { '10 pcs': 1600, '20 pcs': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 28, name: 'OLIVIA', price: 1600, image: 'static/images/product28.jpg', flowers: 'Colorful Carnations', fillers: 'Greens', available_colors: ['Mixed/Colorful'], stems_options: ['10 pcs', '20 pcs'], stems_prices: { '10 pcs': 1600, '20 pcs': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 29, name: 'CANDICE', price: 1500, image: 'static/images/product29.jpg', flowers: 'Carnations & Local Roses', fillers: '', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs + 1 doz roses', '20 pcs + 2 doz roses'], stems_prices: { '10 pcs + 1 doz roses': 1500, '20 pcs + 2 doz roses': 3900 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 30, name: 'SANDY', price: 1990, image: 'static/images/product30.jpg', flowers: 'Carnations, Local Roses, Matthiola', fillers: 'Fillers & Foliage', stems_options: ['10+1doz+Matthiola', '20+2doz+Matthiola', '30+3doz+Matthiola'], stems_prices: { '10+1doz+Matthiola': 1990, '20+2doz+Matthiola': 4200, '30+3doz+Matthiola': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 31, name: 'AMETHYST', price: 1900, image: 'static/images/product31.jpg', flowers: 'All Carnations', fillers: '', stems_options: ['20 pcs', '40 pcs', '60 pcs'], stems_prices: { '20 pcs': 1900, '40 pcs': 3500, '60 pcs': 6000 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 32, name: 'GLORIA', price: 2200, image: 'static/images/product32.jpg', flowers: 'Carnations', fillers: 'Gypsophila', stems_options: ['20 pcs', '40 pcs', '60 pcs'], stems_prices: { '20 pcs': 2200, '40 pcs': 3800, '60 pcs': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 27, name: 'HANNAH', price: 1600, image: 'static/images/product27.jpg', flowers: 'Carnations', fillers: 'Gypsophila', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations', '20 pcs carnations'], stems_prices: { '10 pcs carnations': 1600, '20 pcs carnations': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 28, name: 'OLIVIA', price: 1600, image: 'static/images/product28.jpg', flowers: 'Colorful Carnations', fillers: 'Greens', available_colors: ['Mixed/Colorful'], stems_options: ['10 pcs carnations', '20 pcs carnations'], stems_prices: { '10 pcs carnations': 1600, '20 pcs carnations': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 29, name: 'CANDICE', price: 1500, image: 'static/images/product29.jpg', flowers: 'Carnations & Local Roses', fillers: '', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations + 1 doz roses', '20 pcs carnations + 2 doz roses', '30 pcs carnations + 5 doz roses'], stems_prices: { '10 pcs carnations + 1 doz roses': 1500, '20 pcs carnations + 2 doz roses': 4200, '30 pcs carnations + 5 doz roses': 5700 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 30, name: 'SANDY', price: 1990, image: 'static/images/product30.jpg', flowers: 'Carnations, Local Roses, Matthiola', fillers: 'Fillers & Foliage', stems_options: ['10 pcs carnations + 1 doz roses + Matthiola', '20 pcs carnations + 2 doz roses + Matthiola', '30 pcs carnations + 3 doz roses + Matthiola'], stems_prices: { '10 pcs carnations + 1 doz roses + Matthiola': 1990, '20 pcs carnations + 2 doz roses + Matthiola': 4200, '30 pcs carnations + 3 doz roses + Matthiola': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 31, name: 'AMETHYST', price: 1900, image: 'static/images/product31.jpg', flowers: 'All Carnations', fillers: '', stems_options: ['20 pcs carnations', '40 pcs carnations', '60 pcs carnations'], stems_prices: { '20 pcs carnations': 1900, '40 pcs carnations': 3500, '60 pcs carnations': 6000 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 32, name: 'GLORIA', price: 2200, image: 'static/images/product32.jpg', flowers: 'Carnations', fillers: 'Gypsophila', stems_options: ['20 pcs carnations', '40 pcs carnations', '60 pcs carnations'], stems_prices: { '20 pcs carnations': 2200, '40 pcs carnations': 3800, '60 pcs carnations': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             // ── SUNFLOWER ──
             { id: 33, name: 'JENNY', price: 899, image: 'static/images/product33.jpg', flowers: '1 Sunflower', fillers: 'Fillers & Foliage', single_price: 899, mainCategory: 'fresh', flowerType: 'Sunflower' },
             { id: 34, name: 'HONEY', price: 1899, image: 'static/images/product34.jpg', flowers: '3 Sunflowers, 1 Dozen Roses', fillers: 'Fillers & Foliage', single_price: 1899, mainCategory: 'fresh', flowerType: 'Sunflower' },
@@ -1753,9 +1776,9 @@
         const flowerCategories = [
             { slug: 'roses', name: 'ROSES BOUQUETS', image: 'static/images/PREVIEW1.jpg' },
             { slug: 'thumbelina', name: 'THUMBELINA BOUQUETS', image: 'static/images/PREVIEW2.jpg' },
-            { slug: 'lily', name: 'LILY BOUQUETS', image: 'static/images/PREVIEW3.jpg', imagePosition: 'center 14%' },
+            { slug: 'lily', name: 'LILY BOUQUETS', image: 'static/images/PREVIEW3.jpg' },
             { slug: 'carnation-roses', name: 'CARNATION & ROSES BOUQUETS', image: 'static/images/PREVIEW4.jpg' },
-            { slug: 'sunflower', name: 'SUNFLOWER BOUQUETS', image: 'static/images/PREVIEW5.jpg', imagePosition: 'center 12%' },
+            { slug: 'sunflower', name: 'SUNFLOWER BOUQUETS', image: 'static/images/PREVIEW5.jpg' },
             { slug: 'gerbera-chamomile', name: 'GERBERA & CHAMOMILE BOUQUETS', image: 'static/images/PREVIEW6.jpg' },
             { slug: 'tulip', name: 'TULIP BOUQUETS', image: 'static/images/PREVIEW7.jpg' },
             { slug: 'peony', name: 'PEONY BOUQUETS', image: 'static/images/PREVIEW8.jpg' }
@@ -1913,7 +1936,7 @@
             container.innerHTML = flowerCategories.map(category => `
                 <button class="product-card category-card" type="button" onclick="selectFlowerCategory('${category.slug}')">
                     <div class="product-image-wrapper">
-                        <img src="${category.image}" class="product-image" alt="${category.name}" style="object-position: ${category.imagePosition || 'center center'};">
+                        <img src="${category.image}" class="product-image" alt="${category.name}">
                     </div>
                     <h3 class="product-title">${category.name}</h3>
                 </button>

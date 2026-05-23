@@ -24,6 +24,26 @@
             overflow-x: hidden;
         }
 
+        @media (max-width: 768px) {
+            body {
+                background: none !important;
+                position: relative;
+                min-height: 100vh;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url("{% static 'images/background-flowers.jpg' %}");
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                z-index: -1;
+                pointer-events: none;
+            }
+        }
+
         /* --- NAVIGATION BAR --- */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -256,9 +276,9 @@
 
         .products-container {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
-            max-width: 1200px; 
+            grid-template-columns: repeat(4, minmax(0, 1fr)); 
+            gap: 24px; 
+            max-width: 1500px; 
             margin: 0 auto;
         }
 
@@ -272,6 +292,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.6s ease-out forwards;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -882,13 +903,6 @@
                 max-width: 100% !important;
             }
 
-            /* Center the lone 3rd card */
-            .product-card:last-child {
-                grid-column: 1 / -1 !important;
-                width: 50% !important;
-                margin: 0 auto !important;
-            }
-
             /* Card — square shape */
             .product-card {
                 border-radius: 12px !important;
@@ -1167,7 +1181,7 @@
         
         <!-- Products Grid -->
         <div class="products-container">
-            <div class="product-card">
+            <div class="product-card" onclick="viewDetails(9)">
                 <div class="product-image-wrapper">
                     <img src="{% static 'images/bestseller1.jpg' %}" class="product-image" alt="ERICA">
                 </div>
@@ -1175,7 +1189,7 @@
                 <button class="view-details-btn" onclick="viewDetails(9)">View Details</button>
             </div>
 
-            <div class="product-card">
+            <div class="product-card" onclick="viewDetails(46)">
                 <div class="product-image-wrapper">
                     <img src="{% static 'images/bestseller2.jpg' %}" class="product-image" alt="AMELIE">
                 </div>
@@ -1183,12 +1197,20 @@
                 <button class="view-details-btn" onclick="viewDetails(46)">View Details</button>
             </div>
 
-            <div class="product-card">
+            <div class="product-card" onclick="viewDetails(4)">
                 <div class="product-image-wrapper">
                     <img src="{% static 'images/bestseller3.jpg' %}" class="product-image" alt="AMANDA">
                 </div>
                 <h3 class="product-title">AMANDA</h3>
                 <button class="view-details-btn" onclick="viewDetails(4)">View Details</button>
+            </div>
+
+            <div class="product-card" onclick="viewDetails(29)">
+                <div class="product-image-wrapper">
+                    <img src="{% static 'images/product29.jpg' %}" class="product-image" alt="CANDICE">
+                </div>
+                <h3 class="product-title">CANDICE</h3>
+                <button class="view-details-btn" onclick="viewDetails(29)">View Details</button>
             </div>
         </div>
     </section>
@@ -1249,12 +1271,14 @@
             'Orange/Yellow': '#f59e0b', 'Mixed/Colorful': '#f97316'
         };
 
-        // Product data - 3 bestsellers from shop
+        // Product data - 4 bestsellers from shop
         const baseProducts = [
             // ERICA - Thumbelina bouquet
             { id: 9, name: 'ERICA', price: 990, image: '{% static "images/bestseller1.jpg" %}', flowers: 'Sunflower, Everlasting, Gerbera, Roses, Mums', fillers: 'Fillers & Foliage', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 990, Medium: 2290, Large: 3490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
             // AMELIE - Tulips
             { id: 46, name: 'AMELIE', price: 3500, image: '{% static "images/bestseller2.jpg" %}', flowers: 'Tulips', fillers: '', stems_options: ['10 stems', '20 stems', '30 stems', '40 stems', '50 stems'], stems_prices: { '10 stems': 3500, '20 stems': 6500, '30 stems': 9500, '40 stems': 13000, '50 stems': 16000 }, mainCategory: 'fresh', flowerType: 'Tulip' },
+            // CANDICE - Cream White Roses
+            { id: 29, name: 'CANDICE', price: 1500, image: '{% static "images/product29.jpg" %}', flowers: 'Carnations & Local Roses', fillers: '', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations + 1 doz roses', '20 pcs carnations + 2 doz roses', '30 pcs carnations + 5 doz roses'], stems_prices: { '10 pcs carnations + 1 doz roses': 1500, '20 pcs carnations + 2 doz roses': 4200, '30 pcs carnations + 5 doz roses': 5700 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             // AMANDA - Cream White Roses
             { id: 4, name: 'AMANDA', price: 799, image: '{% static "images/bestseller3.jpg" %}', flowers: 'Local Cream White Roses', fillers: 'Lilac Statice', available_colors: ['Cream White'], quantity_options: [1, 2, 4, 6, 8, 10], quantity_prices: { 1: 799, 2: 1290, 4: 1890, 6: 2690, 8: 3690, 10: 4800 }, quantity_label: 'Dozen', mainCategory: 'fresh', flowerType: 'Roses' }
         ];
