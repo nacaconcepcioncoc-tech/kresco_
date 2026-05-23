@@ -331,7 +331,7 @@
             align-items: center;
             gap: 12px;
             padding: 16px 45px;
-            background: linear-gradient(135deg, #2dbebe 0%, #4CA1AF 100%);
+            background: linear-gradient(135deg, #427b89 0%, #7cb8d5 100%);
             color: #ffffff;
             text-decoration: none;
             font-weight: 700;
@@ -369,8 +369,8 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 26px;
-            height: 20px;
+            width: 14px;
+            height: 12px;
             cursor: pointer;
             background: none;
             border: none;
@@ -462,7 +462,62 @@
             .hamburger { display: flex !important; }
             .nav-right  { display: none !important; }
             .nav-cta { display: none !important; }
-            .navbar { padding: 0.4rem 1rem !important; width: calc(100% - 20px) !important; }
+            
+            .navbar { 
+                position: fixed !important;
+                top: 10px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 95% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: 55px !important;
+                padding: 0.4rem 1rem !important;
+                z-index: 1000 !important;
+                background: rgba(103, 133, 182, 0.7) !important;
+                backdrop-filter: blur(12px) !important;
+                border-radius: 10px !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                margin: 0 !important;
+            }
+
+            .nav-container {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                gap: 1rem !important;
+            }
+
+            .logo { 
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.8rem !important;
+                flex-shrink: 0 !important;
+            }
+
+            .logo-img-container {
+                width: 42px !important;
+                height: 42px !important;
+                flex-shrink: 0 !important;
+            }
+
+            .logo-text {
+                font-size: 1rem !important;
+                letter-spacing: 1.5px !important;
+                white-space: nowrap !important;
+            }
+
+            .hamburger {
+                width: 25px !important;
+                height: 25px !important;
+                flex-shrink: 0 !important;
+            }
+            
             .hero {
                 background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)) center center / cover no-repeat scroll, url("static/images/background.jpg") center center / cover no-repeat scroll;
             }
@@ -530,7 +585,7 @@
             margin-bottom: 0.6rem;
         }
         .kres-footer-col ul { list-style: none; padding: 0; margin: 0; }
-        .kres-footer-col ul li { margin-bottom: 0.3rem; }
+        .kres-footer-col ul li { margin-bottom: 0.3rem; color: rgba(255,255,255,0.7); font-size: 0.8rem; }
         .kres-footer-col ul li a {
             color: rgba(255,255,255,0.7);
             text-decoration: none;
@@ -921,11 +976,11 @@
             <div class="kres-footer-col">
                 <h4>Our Offerings</h4>
                 <ul>
-                    <li><a href="shop.html">Bouquets</a></li>
-                    <li><a href="shop.html">Arrangements</a></li>
-                    <li><a href="shop.html">Gift Sets</a></li>
-                    <li><a href="bestsellers.html">Seasonal Blooms</a></li>
-                    <li><a href="shop.html">Custom Orders</a></li>
+                    <li>Bouquets</li>
+                    <li>Arrangements</li>
+                    <li>Gift Sets</li>
+                    <li>Seasonal Blooms</li>
+                    <li>Custom Orders</li>
                 </ul>
             </div>
 
@@ -942,7 +997,7 @@
 
         </div>
         <div class="kres-footer-bottom">
-            <p>&copy; 2025 KRES Co. All rights reserved.</p>
+            <p>&copy; 2026 KRES Co. All rights reserved.</p>
         </div>
     </footer>
     <!-- ===== END FOOTER ===== -->
