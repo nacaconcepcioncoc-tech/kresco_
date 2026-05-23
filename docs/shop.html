@@ -1753,9 +1753,9 @@
         const flowerCategories = [
             { slug: 'roses', name: 'ROSES BOUQUETS', image: 'static/images/PREVIEW1.jpg' },
             { slug: 'thumbelina', name: 'THUMBELINA BOUQUETS', image: 'static/images/PREVIEW2.jpg' },
-            { slug: 'lily', name: 'LILY BOUQUETS', image: 'static/images/PREVIEW3.jpg' },
+            { slug: 'lily', name: 'LILY BOUQUETS', image: 'static/images/PREVIEW3.jpg', imagePosition: 'center 14%' },
             { slug: 'carnation-roses', name: 'CARNATION & ROSES BOUQUETS', image: 'static/images/PREVIEW4.jpg' },
-            { slug: 'sunflower', name: 'SUNFLOWER BOUQUETS', image: 'static/images/PREVIEW5.jpg' },
+            { slug: 'sunflower', name: 'SUNFLOWER BOUQUETS', image: 'static/images/PREVIEW5.jpg', imagePosition: 'center 12%' },
             { slug: 'gerbera-chamomile', name: 'GERBERA & CHAMOMILE BOUQUETS', image: 'static/images/PREVIEW6.jpg' },
             { slug: 'tulip', name: 'TULIP BOUQUETS', image: 'static/images/PREVIEW7.jpg' },
             { slug: 'peony', name: 'PEONY BOUQUETS', image: 'static/images/PREVIEW8.jpg' }
@@ -1913,7 +1913,7 @@
             container.innerHTML = flowerCategories.map(category => `
                 <button class="product-card category-card" type="button" onclick="selectFlowerCategory('${category.slug}')">
                     <div class="product-image-wrapper">
-                        <img src="${category.image}" class="product-image" alt="${category.name}">
+                        <img src="${category.image}" class="product-image" alt="${category.name}" style="object-position: ${category.imagePosition || 'center center'};">
                     </div>
                     <h3 class="product-title">${category.name}</h3>
                 </button>
