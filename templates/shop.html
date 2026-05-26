@@ -1847,9 +1847,11 @@
                 ffSection.style.display = 'none';
             }
 
-            // Clear any stale box options from a previous modal open
+            // Clear any stale box options and wrapper section from a previous modal open
             const staleBox = document.getElementById('boxOptionsSection');
             if (staleBox) staleBox.remove();
+            const staleWrapperTop = document.getElementById('wrapperSection');
+            if (staleWrapperTop) staleWrapperTop.remove();
 
             const quantityList = document.getElementById('quantityPricingList');
             const pricingLabel = document.getElementById('pricingLabel');
@@ -1873,30 +1875,25 @@
                     const typesOnlyNote = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
                     const forceOnlyNoteIds = new Set([15,16]); // FRANCESCA(15), AUBREY(16)
 
-                    const defaultWrapperKey = 'Inner White and Craft Paper Wrapper';
-                    const unwantedWrapper = 'Pearl Pleated Wrap and Korean Wrapper Round Style';
+                    const specialWrapperRows = {
+                        9: 'Inner White and Craft Paper Wrapper',
+                        10: 'Inner White and Craft Paper Wrapper',
+                        11: 'Pearl Pleated Wrap and Korean Wrapper Round Style',
+                        12: 'Pearl Pleated Wrap and Korean Wrapper Round Style'
+                    };
 
-                    // For the specified bouquet types and product ids, do not show the default wrapper text
-                    // and also filter out the unwanted 'Pearl Pleated Wrap and Korean Wrapper Round Style' entry.
-                    let wrappersToShow = wrappers.slice();
-                    if (typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
-                        wrappersToShow = wrappersToShow.filter(w => {
-                            const t = w.trim().toLowerCase();
-                            return t !== defaultWrapperKey.toLowerCase() && t !== unwantedWrapper.toLowerCase();
-                        });
-                    }
-
-                    if (wrappersToShow.length > 0 || product.wrapper_note || typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
-                        const showOnlyNote = typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id);
-                        const wrapperHTML = showOnlyNote ? '' : wrappersToShow.map(w => `<p class="size-detail-row">${w}</p>`).join('');
-                        // Avoid showing product.wrapper_note if it only repeats the generic note
-                        const normalizedWrapperNote = (product.wrapper_note || '').trim();
-                        const suppressedNote = /^(flower wrapper can be customized\.?|wrapper color can also be customized\.?)/i.test(normalizedWrapperNote);
-                        const effectiveWrapperNote = suppressedNote ? null : normalizedWrapperNote;
-                        const wrapperNoteText = showOnlyNote ? '(Wrapper color can also be customized)' : (effectiveWrapperNote ? `(${effectiveWrapperNote})` : '(Wrapper color can also be customized)');
+                    if (specialWrapperRows[product.id]) {
+                        const wrapperHTML = `<p class="size-detail-row">${specialWrapperRows[product.id]}</p>`;
+                        const wrapperNoteText = '(Wrapper color can also be customized)';
 
                         quantityList.insertAdjacentHTML('afterend',
                             `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle" style="color:#7f7f7f;">WRAPPER</h3>${wrapperHTML}<p class="size-detail-note" style="color:#8b004b;">${wrapperNoteText}</p></div>`
+                        );
+                    } else if (typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id) || product.wrapper_note) {
+                        const wrapperNoteText = '(Wrapper color can also be customized)';
+
+                        quantityList.insertAdjacentHTML('afterend',
+                            `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle" style="color:#7f7f7f;">WRAPPER</h3><p class="size-detail-note" style="color:#8b004b;">${wrapperNoteText}</p></div>`
                         );
                     }
                 }

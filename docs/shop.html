@@ -1669,7 +1669,7 @@
             { id: 4, name: 'AMANDA', price: 799, image: 'static/images/product4.jpg', flowers: 'Local Cream White Roses', fillers: 'Lilac Statice', available_colors: ['Cream White'], quantity_options: [1, 2, 4, 6, 8, 10], quantity_prices: { 1: 799, 2: 1290, 4: 1890, 6: 2690, 8: 3690, 10: 4800 }, quantity_label: 'Dozen', mainCategory: 'fresh', flowerType: 'Roses' },
             { id: 5, name: 'GABRIELLA', price: 1200, image: 'static/images/product5.jpg', flowers: 'Local Red Roses', fillers: 'Gypsophila', available_colors: ['Red'], quantity_options: [1, 2, 4, 6, 8, 10], quantity_prices: { 1: 1200, 2: 1600, 4: 2400, 6: 3600, 8: 4800, 10: 6000 }, quantity_label: 'Dozen', mainCategory: 'fresh', flowerType: 'Roses' },
             { id: 6, name: 'ALTHEA', price: 1690, image: 'static/images/product6.jpg', flowers: 'China Roses', fillers: 'Statice, Gypsophila & Foliage', available_colors: ['Red', 'Two-toned Pink', 'Light Pink', 'White', 'Orange', 'Yellow', 'Purple'], stems_options: ['3 pcs', '10 stems', '20 stems'], stems_prices: { '3 pcs': 1690, '10 stems': 3500, '20 stems': 4500 }, mainCategory: 'fresh', flowerType: 'Roses' },
-            { id: 7, name: 'Round Box Roses', price: 1900, image: 'static/images/product7.jpg', flowers: 'Local Roses', fillers: '', available_colors: ['Red', 'Cream White', 'Light Pink', 'Fuchsia Pink'], box_options: ['Red', 'Black', 'White'], size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1900, Medium: 2900, Large: 4900 }, mainCategory: 'fresh', flowerType: 'Roses' },
+            { id: 7, name: 'ROUND BOX ROSES', price: 1900, image: 'static/images/product7.jpg', flowers: 'Local Roses', fillers: '', available_colors: ['Red', 'Cream White', 'Light Pink', 'Fuchsia Pink'], box_options: ['Red', 'Black', 'White'], box_options_label: 'ROUND BOX OPTIONS', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1900, Medium: 2900, Large: 4900 }, mainCategory: 'fresh', flowerType: 'Roses' },
             { id: 8, name: 'ROYALE', price: 5500, image: 'static/images/product8.jpg', flowers: 'Ecuadorian Roses', fillers: 'Fillers & Foliage', stems_options: ['12 stems', '24 stems'], stems_prices: { '12 stems': 5500, '24 stems': 7500 }, mainCategory: 'fresh', flowerType: 'Roses' },
             // ── THUMBELINA / ROUND ASSORTED ──
             {
@@ -1819,6 +1819,9 @@
 
             document.getElementById('detailName').textContent = product.name;
             document.getElementById('detailImage').src = product.image;
+            // If opening ROUND BOX ROSES (id 7), ensure no WRAPPER section remains
+            const _existingWrapper = document.getElementById('wrapperSection');
+            if (product.id === 7 && _existingWrapper) _existingWrapper.remove();
             const detailNameNote = document.getElementById('detailNameNote');
             if (product.box_options_note) {
                 detailNameNote.textContent = `(${product.box_options_note})`;
@@ -1843,9 +1846,11 @@
                 ffSection.style.display = 'none';
             }
 
-            // Clear any stale box options from a previous modal open
+            // Clear any stale box options and wrapper section from a previous modal open
             const staleBox = document.getElementById('boxOptionsSection');
             if (staleBox) staleBox.remove();
+            const staleWrapperTop = document.getElementById('wrapperSection');
+            if (staleWrapperTop) staleWrapperTop.remove();
 
             const quantityList = document.getElementById('quantityPricingList');
             const pricingLabel = document.getElementById('pricingLabel');
@@ -1869,30 +1874,25 @@
                     const typesOnlyNote = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
                     const forceOnlyNoteIds = new Set([15,16]); // FRANCESCA(15), AUBREY(16)
 
-                    const defaultWrapperKey = 'Inner White and Craft Paper Wrapper';
-                    const unwantedWrapper = 'Pearl Pleated Wrap and Korean Wrapper Round Style';
+                    const specialWrapperRows = {
+                        9: 'Inner White and Craft Paper Wrapper',
+                        10: 'Inner White and Craft Paper Wrapper',
+                        11: 'Pearl Pleated Wrap and Korean Wrapper Round Style',
+                        12: 'Pearl Pleated Wrap and Korean Wrapper Round Style'
+                    };
 
-                    // For the specified bouquet types and product ids, do not show the default wrapper text
-                    // and also filter out the unwanted 'Pearl Pleated Wrap and Korean Wrapper Round Style' entry.
-                    let wrappersToShow = wrappers.slice();
-                    if (typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
-                        wrappersToShow = wrappersToShow.filter(w => {
-                            const t = w.trim().toLowerCase();
-                            return t !== defaultWrapperKey.toLowerCase() && t !== unwantedWrapper.toLowerCase();
-                        });
-                    }
-
-                    if (wrappersToShow.length > 0 || product.wrapper_note || typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
-                        const showOnlyNote = typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id);
-                        const wrapperHTML = showOnlyNote ? '' : wrappersToShow.map(w => `<p class="size-detail-row">${w}</p>`).join('');
-                        // Avoid showing product.wrapper_note if it only repeats the generic note
-                        const normalizedWrapperNote = (product.wrapper_note || '').trim();
-                        const suppressedNote = /^(flower wrapper can be customized\.?|wrapper color can also be customized\.?)/i.test(normalizedWrapperNote);
-                        const effectiveWrapperNote = suppressedNote ? null : normalizedWrapperNote;
-                        const wrapperNoteText = showOnlyNote ? '(Wrapper color can also be customized)' : (effectiveWrapperNote ? `(${effectiveWrapperNote})` : '(Wrapper color can also be customized)');
+                    if (specialWrapperRows[product.id]) {
+                        const wrapperHTML = `<p class="size-detail-row">${specialWrapperRows[product.id]}</p>`;
+                        const wrapperNoteText = '(Wrapper color can also be customized)';
 
                         quantityList.insertAdjacentHTML('afterend',
-                            `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle detail-section-subtitle--green">WRAPPER</h3>${wrapperHTML}<p class="size-detail-note">${wrapperNoteText}</p></div>`
+                            `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle" style="color:#7f7f7f;">WRAPPER</h3>${wrapperHTML}<p class="size-detail-note" style="color:#8b004b;">${wrapperNoteText}</p></div>`
+                        );
+                    } else if (typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id) || product.wrapper_note) {
+                        const wrapperNoteText = '(Wrapper color can also be customized)';
+
+                        quantityList.insertAdjacentHTML('afterend',
+                            `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle" style="color:#7f7f7f;">WRAPPER</h3><p class="size-detail-note" style="color:#8b004b;">${wrapperNoteText}</p></div>`
                         );
                     }
                 }
@@ -1930,13 +1930,13 @@
                     const typesOnlyNoteGlobal = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
                     const forceOnlyNoteIdsGlobal = new Set([15,16]);
                     const genericWrapperNoteIds = new Set([15,16,19,20,21,27,29,30]);
-            if (!wrapperSectionExistsAfterPricing) {
+            if (!wrapperSectionExistsAfterPricing && product.id !== 7) {
                 if (typesOnlyNoteGlobal.has(product.flowerType) || forceOnlyNoteIdsGlobal.has(product.id) || genericWrapperNoteIds.has(product.id) || product.wrapper_note) {
                     // The generic wrapper note is shown for all non-special items; only the four Thumbelina products
                     // keep their own wrapper rows in the size-details branch.
                     const wrapperNoteText = '(Wrapper color can also be customized)';
                     quantityList.insertAdjacentHTML('afterend',
-                        `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle detail-section-subtitle--green">WRAPPER</h3><p class="size-detail-note">${wrapperNoteText}</p></div>`
+                        `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle" style="color:#7f7f7f;">WRAPPER</h3><p class="size-detail-note" style="color:#8b004b;">${wrapperNoteText}</p></div>`
                     );
                 }
             }
@@ -1956,7 +1956,10 @@
             const bouquetTypesNoColorNote = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
             if (colors.length > 0) {
                 colorsSection.style.display = 'block';
-                document.getElementById('colorOptionsLabel').textContent = product.color_options_label || 'COLOR OPTIONS';
+                let colorLabel = product.color_options_label || 'COLOR OPTIONS';
+                if (product.flowerType === 'Roses') colorLabel = 'ROSES COLOR OPTIONS';
+                if (product.flowerType === 'carnation-roses') colorLabel = 'CARNATIONS FLOWER COLOR OPTIONS';
+                document.getElementById('colorOptionsLabel').textContent = colorLabel;
                 const showColorNote = !bouquetTypesNoColorNote.has(product.flowerType);
                 document.getElementById('colorNote').textContent = showColorNote ? (product.color_note || '* Wrapper color can also be customized') : '';
                 document.getElementById('colorOptionsList').innerHTML = colors.map(c =>
