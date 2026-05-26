@@ -665,6 +665,14 @@
             font-family: "Times New Roman", serif;
         }
 
+        .detail-name-note {
+            color: #228B22;
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin: -14px 0 18px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .detail-price {
             font-size: 1.2rem;
             color: black;
@@ -735,6 +743,17 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+        .detail-section-subtitle--green {
+            color: #228B22;
+        }
+
+        .detail-section-note-inline {
+            color: #000;
+            letter-spacing: 0;
+            text-transform: none;
+            font-weight: normal;
+        }
+
         .quantity-pricing-list {
             display: flex;
             flex-direction: column;
@@ -749,6 +768,60 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             font-size: 0.95rem;
             color: #333;
+        }
+
+        .size-detail-card {
+            border: 1px solid rgba(34, 139, 34, 0.14);
+            border-radius: 14px;
+            padding: 15px 16px;
+            background: linear-gradient(180deg, rgba(245, 250, 245, 0.92), rgba(255, 255, 255, 0.98));
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        .size-detail-card + .size-detail-card {
+            margin-top: 14px;
+        }
+
+        .size-detail-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .size-detail-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #228B22;
+        }
+
+        .size-detail-price {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .size-detail-row {
+            margin: 7px 0;
+            color: #333;
+            font-size: 0.94rem;
+            line-height: 1.55;
+        }
+
+        .size-detail-row .label {
+            color: #228B22;
+            font-weight: 700;
+        }
+
+        .size-detail-note {
+            margin-top: 8px;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.55;
         }
 
         .quantity-price {
@@ -796,6 +869,17 @@
         .color-dot:hover {
             transform: scale(1.1);
             border-color: #333;
+        }
+
+        .box-option-swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 6px;
+            background: #dcdcdc;
+            border: 1px solid #c8c8c8;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
         .color-name {
@@ -1495,7 +1579,7 @@
 
     <!-- Shop Section -->
     <section class="shop-section">
-        <h2>Our Catalogue</h2>
+        <h2>Our Catalog</h2>
         <p class="shop-subtitle">Browse our complete collection of beautifully crafted bouquets and imported flowers.<br> Find the perfect arrangements for any occasion.</p>
         
         <!-- Search Bar -->
@@ -1532,6 +1616,7 @@
             </div>
 
             <h1 class="detail-name" id="detailName">Premium Bouquet</h1>
+            <p id="detailNameNote" class="detail-section-note-inline" style="margin-top:6px; font-size:0.95rem; display:none;"></p>
             
             <!-- Flowers & Fillers — simple text format -->
             <div id="flowersFillerSection" style="display:none;">
@@ -1548,9 +1633,9 @@
             <!-- Rose Color Options — shown for flowers only -->
             <div id="colorsSection" style="display:none;">
                 <div class="detail-section-divider"></div>
-                <h3 class="detail-section-subtitle">COLOR OPTIONS</h3>
+                <h3 class="detail-section-subtitle" id="colorOptionsLabel">COLOR OPTIONS</h3>
                 <div class="color-options-grid" id="colorOptionsList"></div>
-                <p class="color-note">* Wrapper color can also be customized</p>
+                <p class="color-note" id="colorNote">(Wrapper color can also be customized)</p>
             </div>
 
             <div class="custom-options">
@@ -1558,7 +1643,7 @@
                 <strong>Custom Options Available</strong>
                 <div id="customOptionsText">
                     <p>Want to adjust the colors or add a special touch? Contact us to discuss your preferences. We can customize this bouquet to match your specific needs and occasion!</p>
-                    <p><span style="font-weight: 700; color: #787878;">To place your custom order,</span> click <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" style="color: #0d4da1; font-weight: 700; text-decoration: none;">KRES Co.</a> and let's start creating your perfect bouquet!</p>
+                    <p><span style="font-weight: 700; color: #313030;">To place your custom order,</span> click <a href="https://www.facebook.com/share/14aXr42953s/?mibextid=wwXIfr" target="_blank" style="color: #0d4da1; font-weight: 700; text-decoration: none;">KRES Co.</a> and let's start creating your perfect bouquet!</p>
                 </div>
             </div>
         </div>
@@ -1587,41 +1672,132 @@
             { id: 7, name: 'Round Box Roses', price: 1900, image: 'static/images/product7.jpg', flowers: 'Local Roses', fillers: '', available_colors: ['Red', 'Cream White', 'Light Pink', 'Fuchsia Pink'], box_options: ['Red', 'Black', 'White'], size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1900, Medium: 2900, Large: 4900 }, mainCategory: 'fresh', flowerType: 'Roses' },
             { id: 8, name: 'ROYALE', price: 5500, image: 'static/images/product8.jpg', flowers: 'Ecuadorian Roses', fillers: 'Fillers & Foliage', stems_options: ['12 stems', '24 stems'], stems_prices: { '12 stems': 5500, '24 stems': 7500 }, mainCategory: 'fresh', flowerType: 'Roses' },
             // ── THUMBELINA / ROUND ASSORTED ──
-            { id: 9, name: 'ERICA', price: 990, image: 'static/images/product9.jpg', flowers: 'Sunflower, Everlasting, Gerbera, Roses, Mums', fillers: 'Fillers & Foliage', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 990, Medium: 2290, Large: 3490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 10, name: 'ELISE', price: 1190, image: 'static/images/product10.jpg', flowers: 'China Roses, Everlasting, Gerbera, Roses, Carnations, Mums', fillers: 'Fillers & Foliage', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1190, Medium: 2290, Large: 3790 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 11, name: 'SCARLET', price: 1990, image: 'static/images/product11.jpg', flowers: 'Tulips, Everlasting, Gerbera, Roses, Carnations, Mums', fillers: 'Fillers & Foliage', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1990, Medium: 3490, Large: 4990 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 12, name: 'MARIELLE', price: 2490, image: 'static/images/product12.jpg', flowers: 'Lilies, Everlasting, Gerbera, Roses, Carnations, Mums', fillers: 'Fillers & Foliage', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 2490, Medium: 3490, Large: 5490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 13, name: 'KATIE', price: 2190, image: 'static/images/product13.jpg', flowers: 'Gerbera, Lily, Carnation, Roses', fillers: 'Fillers & Foliage', box_options: ['Pink', 'White'], size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 2190, Medium: 3490, Large: 5490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 14, name: 'CALISTA', price: 2190, image: 'static/images/product14.jpg', flowers: 'Gerbera, Lily, Carnation, Roses', fillers: 'Fillers & Foliage', box_options: ['Black', 'Red', 'Gold'], size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 2190, Medium: 3490, Large: 5490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 15, name: 'FRANCESCA', price: 3490, image: 'static/images/product15.jpg', flowers: 'Gerbera, Everlasting, Roses, Alstroemeria, Statice', fillers: 'Fillers & Foliage', size_options: ['Medium', 'Large'], size_prices: { Medium: 3490, Large: 4490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
-            { id: 16, name: 'AUBREY', price: 2500, image: 'static/images/product16.jpg', flowers: 'Gerbera, Carnation, China Roses, Alstroemeria, Statice', fillers: 'Fillers & Foliage', size_options: ['Medium', 'Large'], size_prices: { Medium: 2500, Large: 3500 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
+            {
+                id: 9,
+                name: 'ERICA',
+                price: 990,
+                image: 'static/images/product9.jpg',
+                flowers: 'Everlasting, Gerbera, Pompons, Sunflower, Lily, Carnation, Roses',
+                fillers: 'Fountain Grass, Misty, Mixed Fillers, and Foliage',
+                size_details: [
+                    { size: 'Mini', price: 990, flowers: 'Everlasting, Roses, Sunflower', fillers: 'Fountain Grass, Misty, Mixed Fillers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' },
+                    { size: 'Small', price: 1500, flowers: 'Everlasting, Gerbera, Pompons, Sunflower, Roses', fillers: 'Fountain Grass, Misty, Mixed Fillers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' },
+                    { size: 'Medium', price: 2290, flowers: 'Sunlight, Sunflower, Everlasting, Gerbera, Pompons, Carnation, Roses', fillers: 'Fountain Grass, Misty, Other Mixed Flowers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' },
+                    { size: 'Large', price: 3490, flowers: 'Lily, Sunflower, Everlasting, Gerbera, Pompons, Carnation, Roses', fillers: 'Fountain Grass, Misty, Other Mixed Flowers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            {
+                id: 10,
+                name: 'ELISE',
+                price: 1290,
+                image: 'static/images/product10.jpg',
+                flowers: 'China Roses, Sunlight, Everlasting, Gerbera, Buttons, Pompons, Carnation, Lily, Roses',
+                fillers: 'Fountain Grass, Misty, Mixed Fillers, and Foliage',
+                size_details: [
+                    { size: 'Small', price: 1290, flowers: 'China Roses, Everlasting, Gerbera, Buttons, Carnation, Roses', fillers: 'Fountain Grass, Misty, Mixed Fillers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' },
+                    { size: 'Medium', price: 2290, flowers: 'China Roses, Sunlight, Everlasting, Gerbera, Pompons, Carnation, Roses', fillers: 'Fountain Grass, Misty, Other Mixed Flowers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' },
+                    { size: 'Large', price: 3790, flowers: 'China Roses, Lily, Everlasting, Gerbera, Pompons, Carnation, Roses', fillers: 'Fountain Grass, Misty, Other Mixed Flowers, and Foliage', wrapper: 'Inner White and Craft Paper Wrapper' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            {
+                id: 11,
+                name: 'SCARLET',
+                price: 1990,
+                image: 'static/images/product11.jpg',
+                flowers: 'Tulips, Everlasting, Gerbera, Roses, Carnations, Mums, Pompons, Sunlight',
+                fillers: 'Fountain Grass, Foliage',
+                size_details: [
+                    { size: 'Small', price: 1990, flowers: 'Tulips, Everlasting, Gerbera, Roses, Carnations, Mums, Pompons, Sunlight, Fountain Grass, Roses', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' },
+                    { size: 'Medium', price: 3490, flowers: 'Tulips, Everlasting, Gerbera, Roses, Carnations, Mums, Pompons, Sunlight, Fountain Grass, Roses', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' },
+                    { size: 'Large', price: 4990, flowers: 'Tulips, Everlasting, Gerbera, Roses, Carnations, Mums, Pompons, Sunlight, Fountain Grass, Roses', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            {
+                id: 12,
+                name: 'MARIELLE',
+                price: 2490,
+                image: 'static/images/product12.jpg',
+                flowers: 'Lilies, Everlasting, Gerbera, Roses, Carnations, Mums, Sunlight, Pompons',
+                fillers: 'Fountain Grass, Foliage',
+                size_details: [
+                    { size: 'Small', price: 2490, flowers: 'Lilies, Everlasting, Gerbera, Roses, Carnations, Mums, Sunlight, Pompons, Fountain Grass', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' },
+                    { size: 'Medium', price: 3490, flowers: 'Lilies, Everlasting, Gerbera, Roses, Carnations, Mums, Sunlight, Pompons, Fountain Grass', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' },
+                    { size: 'Large', price: 5490, flowers: 'Lilies, Everlasting, Gerbera, Roses, Carnations, Mums, Sunlight, Pompons, Fountain Grass', fillers: 'Fillers and Foliage', wrapper: 'Pearl Pleated Wrap and Korean Wrapper Round Style' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            {
+                id: 13,
+                name: 'KATIE',
+                price: 2190,
+                image: 'static/images/product13.jpg',
+                flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons',
+                fillers: 'Fountain Grass, Fillers and Foliage',
+                box_options: ['Pink', 'White'],
+                box_options_label: 'ROUND BOX OPTIONS',
+                box_options_note: 'light color flowers',
+                size_details: [
+                    { size: 'Small', price: 2190, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons' },
+                    { size: 'Medium', price: 3490, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight' },
+                    { size: 'Large', price: 5490, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            {
+                id: 14,
+                name: 'CALISTA',
+                price: 2190,
+                image: 'static/images/product14.jpg',
+                flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons',
+                fillers: 'Fountain Grass, Fillers and Foliage',
+                box_options: ['Black', 'Red', 'Gold'],
+                box_options_label: 'ROUND BOX OPTIONS',
+                box_options_note: 'solid colors',
+                size_details: [
+                    { size: 'Small', price: 2190, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons' },
+                    { size: 'Medium', price: 3490, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons' },
+                    { size: 'Large', price: 5490, flowers: 'Gerbera, Lily, Carnation, Roses, Sunlight, Pompons' }
+                ],
+                mainCategory: 'fresh',
+                flowerType: 'Thumbelina'
+            },
+            { id: 15, name: 'FRANCESCA', price: 3490, image: 'static/images/product15.jpg', flowers: 'Gerbera, Everlasting, Roses, Alstroemeria, Statice, Sunlight, Pompons', fillers: 'Fountain Grass, Fillers & Foliage', size_options: ['Medium', 'Large'], size_prices: { Medium: 3490, Large: 4490 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
+            { id: 16, name: 'AUBREY', price: 2500, image: 'static/images/product16.jpg', flowers: 'Gerbera, Carnation, China Roses, Alstroemeria, Sunlight, Pompons', fillers: 'Fountain Grass, Statice, Fillers & Foliage', size_options: ['Medium', 'Large'], size_prices: { Medium: 2500, Large: 3500 }, mainCategory: 'fresh', flowerType: 'Thumbelina' },
             // ── LILY BOUQUETS ──
             { id: 17, name: 'KIARA', price: 800, image: 'static/images/product17.jpg', flowers: '1 Stem Lily', fillers: 'Eucalyptus', single_price: 800, mainCategory: 'fresh', flowerType: 'Lily' },
             { id: 18, name: 'MARCELLA', price: 1500, image: 'static/images/product18.jpg', flowers: '1 Double Petaled Lily', fillers: 'Gypsophila', single_price: 1500, mainCategory: 'fresh', flowerType: 'Lily' },
-            { id: 19, name: 'SAMANTHA', price: 1590, image: 'static/images/product19.jpg', flowers: 'Lily, Carnation, Roses', fillers: 'Eucalyptus', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1590, Medium: 2490, Large: 3490 }, mainCategory: 'fresh', flowerType: 'Lily' },
-            { id: 20, name: 'HAILEY', price: 2290, image: 'static/images/product20.jpg', flowers: 'Lily, Carnation, Gerbera', fillers: 'Eucalyptus', size_options: ['Medium', 'Large'], size_prices: { Medium: 2290, Large: 3190 }, mainCategory: 'fresh', flowerType: 'Lily' },
-            { id: 21, name: 'JASMINE', price: 2190, image: 'static/images/product21.jpg', flowers: 'Lily, Carnation, Gerbera', fillers: 'Eucalyptus', size_options: ['Medium', 'Large'], size_prices: { Medium: 2190, Large: 3290 }, mainCategory: 'fresh', flowerType: 'Lily' },
+            { id: 19, name: 'SAMANTHA', price: 1590, image: 'static/images/product19.jpg', flowers: 'Lily, Carnation, Roses, Gerbera', fillers: 'Eucalyptus', size_options: ['Small', 'Medium', 'Large'], size_prices: { Small: 1590, Medium: 2490, Large: 3490 }, mainCategory: 'fresh', flowerType: 'Lily' },
+            { id: 20, name: 'HAILEY', price: 2290, image: 'static/images/product20.jpg', flowers: 'Lily, Carnation, Gerbera, Paper Roses, Eucalyptus', fillers: 'Eucalyptus', size_options: ['Medium', 'Large'], size_prices: { Medium: 2290, Large: 3190 }, mainCategory: 'fresh', flowerType: 'Lily' },
+            { id: 21, name: 'JASMINE', price: 2190, image: 'static/images/product21.jpg', flowers: 'Lily, Carnation, Roses, Eucalyptus', fillers: 'Eucalyptus', size_options: ['Medium', 'Large'], size_prices: { Medium: 2190, Large: 3290 }, mainCategory: 'fresh', flowerType: 'Lily' },
             { id: 22, name: 'KYSANDRA', price: 2390, image: 'static/images/product22.jpg', flowers: 'Lily, Spray Roses, Local Roses', fillers: 'Gypsophila', size_options: ['Medium', 'Large', 'Extra Large'], size_prices: { Medium: 2390, Large: 3490, 'Extra Large': 5500 }, mainCategory: 'fresh', flowerType: 'Lily' },
             { id: 23, name: 'MARZELLINE', price: 2690, image: 'static/images/product23.jpg', flowers: 'Lily, Imported Roses, Carnation', fillers: 'Statice & Eucalyptus', size_options: ['Medium', 'Large', 'Extra Large'], size_prices: { Medium: 2690, Large: 4290, 'Extra Large': 5890 }, mainCategory: 'fresh', flowerType: 'Lily' },
             { id: 24, name: 'CHAI', price: 3500, image: 'static/images/product24.jpg', flowers: 'Lily, Carnation, China Roses, Local Roses', fillers: '', size_options: ['Medium', 'Large'], size_prices: { Medium: 3500, Large: 5500 }, mainCategory: 'fresh', flowerType: 'Lily' },
             // ── CARNATION & ROSES ──
             { id: 25, name: 'LEAH', price: 699, image: 'static/images/product25.jpg', flowers: '1 Carnation', fillers: 'Fillers & Foliage', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], single_price: 699, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 26, name: 'KIA', price: 990, image: 'static/images/product26.jpg', flowers: '2 Carnations, 1 China Rose', fillers: 'Fillers & Foliage', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], single_price: 990, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 27, name: 'HANNAH', price: 1600, image: 'static/images/product27.jpg', flowers: 'Carnations', fillers: 'Gypsophila', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations', '20 pcs carnations'], stems_prices: { '10 pcs carnations': 1600, '20 pcs carnations': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 27, name: 'HANNAH', price: 1600, image: 'static/images/product27.jpg', flowers: 'Carnations', fillers: 'Gypsophila', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations', '20 pcs carnations', '30 pcs carnations'], stems_prices: { '10 pcs carnations': 1600, '20 pcs carnations': 3500, '30 pcs carnations': 4500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 28, name: 'OLIVIA', price: 1600, image: 'static/images/product28.jpg', flowers: 'Colorful Carnations', fillers: 'Greens', available_colors: ['Mixed/Colorful'], stems_options: ['10 pcs carnations', '20 pcs carnations'], stems_prices: { '10 pcs carnations': 1600, '20 pcs carnations': 3500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
-            { id: 29, name: 'CANDICE', price: 1500, image: 'static/images/product29.jpg', flowers: 'Carnations & Local Roses', fillers: '', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations + 1 doz roses', '20 pcs carnations + 2 doz roses', '30 pcs carnations + 5 doz roses'], stems_prices: { '10 pcs carnations + 1 doz roses': 1500, '20 pcs carnations + 2 doz roses': 4200, '30 pcs carnations + 5 doz roses': 5700 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
+            { id: 29, name: 'CANDICE', price: 1500, image: 'static/images/product29.jpg', flowers: 'Carnations & Local Roses', fillers: '', available_colors: ['Pink', 'White', 'Purple', 'Red', 'Green', 'Yellow'], stems_options: ['10 pcs carnations + 1 doz roses', '20 pcs carnations + 2 doz roses', '20 pcs carnations + 3 doz roses', '30 pcs carnations + 5 doz roses'], stems_prices: { '10 pcs carnations + 1 doz roses': 1500, '20 pcs carnations + 2 doz roses': 3900, '20 pcs carnations + 3 doz roses': 4200, '30 pcs carnations + 5 doz roses': 5700 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 30, name: 'SANDY', price: 1990, image: 'static/images/product30.jpg', flowers: 'Carnations, Local Roses, Matthiola', fillers: 'Fillers & Foliage', stems_options: ['10 pcs carnations + 1 doz roses + Matthiola', '20 pcs carnations + 2 doz roses + Matthiola', '30 pcs carnations + 3 doz roses + Matthiola'], stems_prices: { '10 pcs carnations + 1 doz roses + Matthiola': 1990, '20 pcs carnations + 2 doz roses + Matthiola': 4200, '30 pcs carnations + 3 doz roses + Matthiola': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 31, name: 'AMETHYST', price: 1900, image: 'static/images/product31.jpg', flowers: 'All Carnations', fillers: '', stems_options: ['20 pcs carnations', '40 pcs carnations', '60 pcs carnations'], stems_prices: { '20 pcs carnations': 1900, '40 pcs carnations': 3500, '60 pcs carnations': 6000 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             { id: 32, name: 'GLORIA', price: 2200, image: 'static/images/product32.jpg', flowers: 'Carnations', fillers: 'Gypsophila', stems_options: ['20 pcs carnations', '40 pcs carnations', '60 pcs carnations'], stems_prices: { '20 pcs carnations': 2200, '40 pcs carnations': 3800, '60 pcs carnations': 6500 }, mainCategory: 'fresh', flowerType: 'carnation-roses' },
             // ── SUNFLOWER ──
             { id: 33, name: 'JENNY', price: 899, image: 'static/images/product33.jpg', flowers: '1 Sunflower', fillers: 'Fillers & Foliage', single_price: 899, mainCategory: 'fresh', flowerType: 'Sunflower' },
-            { id: 34, name: 'HONEY', price: 1899, image: 'static/images/product34.jpg', flowers: '3 Sunflowers, 1 Dozen Roses', fillers: 'Fillers & Foliage', single_price: 1899, mainCategory: 'fresh', flowerType: 'Sunflower' },
+            { id: 34, name: 'HONEY', price: 1990, image: 'static/images/product34.jpg', flowers: '3 Sunflowers, Local Roses & Orange Imported Spray Roses', fillers: 'Fillers & Foliage', single_price: 1899, mainCategory: 'fresh', flowerType: 'Sunflower' },
             { id: 35, name: 'REGINE', price: 2990, image: 'static/images/product35.jpg', flowers: '5 Sunflowers, Daisy', fillers: 'Fillers & Foliage', single_price: 2990, mainCategory: 'fresh', flowerType: 'Sunflower' },
             { id: 36, name: 'MALAYA', price: 4490, image: 'static/images/product36.jpg', flowers: 'Sunflowers, Daisy', fillers: '', stems_options: ['10 stems + Daisy', '20 stems + Daisy'], stems_prices: { '10 stems + Daisy': 4490, '20 stems + Daisy': 6590 }, mainCategory: 'fresh', flowerType: 'Sunflower' },
             // ── GERBERA & CHAMOMILE──
             { id: 37, name: 'LINDA', price: 1500, image: 'static/images/product37.jpg', flowers: 'Gerbera', fillers: '', stems_options: ['12 stems', '24 stems'], stems_prices: { '12 stems': 1500, '24 stems': 3500 }, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
-            { id: 38, name: 'KYLA', price: 1000, image: 'static/images/product38.jpg', flowers: '3 Gerbera, 2 Carnation', fillers: 'Fillers & Foliage', single_price: 1000, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
-            { id: 39, name: 'MARIZ', price: 1500, image: 'static/images/product39.jpg', flowers: 'Gerbera', fillers: '', stems_options: ['12 gerbera', '24 gerbera'], stems_prices: { '12 gerbera': 1500, '24 gerbera': 3500 }, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
+            { id: 38, name: 'KYLA', price: 1000, image: 'static/images/product38.jpg', flowers: '3 Gerbera, 2 Carnation, Local Roses', fillers: 'Fillers & Foliage', single_price: 1000, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
+            { id: 39, name: 'MARIZ', price: 1500, image: 'static/images/product39.jpg', flowers: 'Gerbera + Chamomile Daisy', fillers: '', stems_options: ['12 gerbera', '24 gerbera'], stems_prices: { '12 gerbera': 1500, '24 gerbera': 2500 }, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
             { id: 40, name: 'JINKY', price: 2000, image: 'static/images/product40.jpg', flowers: 'Gerbera & Assorted Flowers', fillers: '', stems_options: ['6 pcs gerbera', '12 pcs gerbera'], stems_prices: { '6 pcs gerbera': 2000, '12 pcs gerbera': 3500 }, mainCategory: 'fresh', flowerType: 'gerbera-chamomile' },
             // ── TULIP ──
             { id: 41, name: 'SOFIA', price: 950, image: 'static/images/product41.jpg', flowers: '1 Tulip', fillers: 'Fillers', single_price: 950, mainCategory: 'fresh', flowerType: 'Tulip' },
@@ -1643,11 +1819,21 @@
 
             document.getElementById('detailName').textContent = product.name;
             document.getElementById('detailImage').src = product.image;
+            const detailNameNote = document.getElementById('detailNameNote');
+            if (product.box_options_note) {
+                detailNameNote.textContent = `(${product.box_options_note})`;
+                detailNameNote.style.display = 'block';
+            } else {
+                detailNameNote.textContent = '';
+                detailNameNote.style.display = 'none';
+            }
 
             const colorsSection = document.getElementById('colorsSection');
             const ffSection = document.getElementById('flowersFillerSection');
 
-            if (product.flowers || product.fillers) {
+            if (product.size_details && product.size_details.length > 0) {
+                ffSection.style.display = 'none';
+            } else if (product.flowers || product.fillers) {
                 ffSection.style.display = 'block';
                 let html = '';
                 if (product.flowers) html += '<span class="label">Flowers:</span> ' + product.flowers;
@@ -1664,7 +1850,54 @@
             const quantityList = document.getElementById('quantityPricingList');
             const pricingLabel = document.getElementById('pricingLabel');
 
-            if (product.single_price) {
+            if (product.size_details && product.size_details.length > 0) {
+                pricingLabel.textContent = product.size_details_label || 'SIZE DETAILS';
+                quantityList.innerHTML = product.size_details.map(detail => renderSizeDetailCard({
+                    ...detail,
+                    fillers: detail.fillers || product.fillers
+                })).join('');
+
+                const staleWrapper = document.getElementById('wrapperSection');
+                if (staleWrapper) staleWrapper.remove();
+
+                if (!product.box_options || !product.box_options.length) {
+                    const wrapperSet = new Set();
+                    product.size_details.forEach(d => { if (d.wrapper) wrapperSet.add(d.wrapper); });
+                    if (product.wrapper) wrapperSet.add(product.wrapper);
+                    const wrappers = Array.from(wrapperSet).filter(Boolean);
+
+                    const typesOnlyNote = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
+                    const forceOnlyNoteIds = new Set([15,16]); // FRANCESCA(15), AUBREY(16)
+
+                    const defaultWrapperKey = 'Inner White and Craft Paper Wrapper';
+                    const unwantedWrapper = 'Pearl Pleated Wrap and Korean Wrapper Round Style';
+
+                    // For the specified bouquet types and product ids, do not show the default wrapper text
+                    // and also filter out the unwanted 'Pearl Pleated Wrap and Korean Wrapper Round Style' entry.
+                    let wrappersToShow = wrappers.slice();
+                    if (typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
+                        wrappersToShow = wrappersToShow.filter(w => {
+                            const t = w.trim().toLowerCase();
+                            return t !== defaultWrapperKey.toLowerCase() && t !== unwantedWrapper.toLowerCase();
+                        });
+                    }
+
+                    if (wrappersToShow.length > 0 || product.wrapper_note || typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id)) {
+                        const showOnlyNote = typesOnlyNote.has(product.flowerType) || forceOnlyNoteIds.has(product.id);
+                        const wrapperHTML = showOnlyNote ? '' : wrappersToShow.map(w => `<p class="size-detail-row">${w}</p>`).join('');
+                        // Avoid showing product.wrapper_note if it only repeats the generic note
+                        const normalizedWrapperNote = (product.wrapper_note || '').trim();
+                        const suppressedNote = /^(flower wrapper can be customized\.?|wrapper color can also be customized\.?)/i.test(normalizedWrapperNote);
+                        const effectiveWrapperNote = suppressedNote ? null : normalizedWrapperNote;
+                        const wrapperNoteText = showOnlyNote ? '(Wrapper color can also be customized)' : (effectiveWrapperNote ? `(${effectiveWrapperNote})` : '(Wrapper color can also be customized)');
+
+                        quantityList.insertAdjacentHTML('afterend',
+                            `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle detail-section-subtitle--green">WRAPPER</h3>${wrapperHTML}<p class="size-detail-note">${wrapperNoteText}</p></div>`
+                        );
+                    }
+                }
+
+            } else if (product.single_price) {
                 pricingLabel.textContent = 'PRICE';
                 quantityList.innerHTML = `<div class="quantity-pricing-item"><span class="quantity-label">&nbsp;</span><span class="quantity-price">₱ ${product.single_price.toLocaleString()}</span></div>`;
 
@@ -1691,21 +1924,41 @@
                 quantityList.innerHTML = `<div class="quantity-pricing-item"><span class="quantity-label">&nbsp;</span><span class="quantity-price">₱ ${(product.price || 0).toLocaleString()}</span></div>`;
             }
 
+            // If no size_details branch ran (products like Roses/Lily/etc.), ensure WRAPPER section
+            // is present for specified bouquet types or specific product ids (only note, no default wrapper text).
+            const wrapperSectionExistsAfterPricing = document.getElementById('wrapperSection');
+                    const typesOnlyNoteGlobal = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
+                    const forceOnlyNoteIdsGlobal = new Set([15,16]);
+                    const genericWrapperNoteIds = new Set([15,16,19,20,21,27,29,30]);
+            if (!wrapperSectionExistsAfterPricing) {
+                if (typesOnlyNoteGlobal.has(product.flowerType) || forceOnlyNoteIdsGlobal.has(product.id) || genericWrapperNoteIds.has(product.id) || product.wrapper_note) {
+                    // The generic wrapper note is shown for all non-special items; only the four Thumbelina products
+                    // keep their own wrapper rows in the size-details branch.
+                    const wrapperNoteText = '(Wrapper color can also be customized)';
+                    quantityList.insertAdjacentHTML('afterend',
+                        `<div id="wrapperSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle detail-section-subtitle--green">WRAPPER</h3><p class="size-detail-note">${wrapperNoteText}</p></div>`
+                    );
+                }
+            }
+
             // Box options (Round Box products) — injected with a stable id so it cleans up on reopen
-            if (product.box_options && product.box_options.length) {
-                const boxColors = { Red: '#c41e3a', Black: '#1a1a1a', White: '#ffffff', Pink: '#ffb6c1', Gold: '#d4af37' };
+                if (product.box_options && product.box_options.length) {
                 const boxHTML = product.box_options.map(b =>
                     `<div class="color-option-item"><span class="color-name">${b}</span></div>`
                 ).join('');
                 quantityList.insertAdjacentHTML('afterend',
-                    `<div id="boxOptionsSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle">BOX OPTIONS</h3><div class="color-options-grid">${boxHTML}</div></div>`
+                    `<div id="boxOptionsSection"><div class="detail-section-divider"></div><h3 class="detail-section-subtitle detail-section-subtitle--green">${product.box_options_label || 'BOX OPTIONS'}</h3><div class="color-options-grid">${boxHTML}</div></div>`
                 );
             }
 
             // Color options
             const colors = product.available_colors || [];
+            const bouquetTypesNoColorNote = new Set(['Roses','Lily','Sunflower','carnation-roses','gerbera-chamomile','Tulip','Peony']);
             if (colors.length > 0) {
                 colorsSection.style.display = 'block';
+                document.getElementById('colorOptionsLabel').textContent = product.color_options_label || 'COLOR OPTIONS';
+                const showColorNote = !bouquetTypesNoColorNote.has(product.flowerType);
+                document.getElementById('colorNote').textContent = showColorNote ? (product.color_note || '* Wrapper color can also be customized') : '';
                 document.getElementById('colorOptionsList').innerHTML = colors.map(c =>
                     `<div class="color-option-item"><span class="color-name">${c}</span></div>`
                 ).join('');
@@ -1746,6 +1999,23 @@
             return `${baseTone} Best for ${mainCategory.toLowerCase()} arrangements.${flowersText}${fillersText}`;
         }
 
+        function renderSizeDetailCard(detail) {
+            const rows = [];
+            if (detail.flowers) rows.push(`<p class="size-detail-row"><span class="label">Flowers:</span> ${detail.flowers}</p>`);
+            if (detail.fillers) rows.push(`<p class="size-detail-row"><span class="label">Fillers:</span> ${detail.fillers}</p>`);
+            if (detail.customization) rows.push(`<p class="size-detail-row"><span class="label">Customization:</span> ${detail.customization}</p>`);
+
+            return `
+                <div class="size-detail-card">
+                    <div class="size-detail-header">
+                        <span class="size-detail-title">${detail.size}</span>
+                        <span class="size-detail-price">₱ ${Number(detail.price || 0).toLocaleString()}</span>
+                    </div>
+                    ${rows.join('')}
+                </div>
+            `;
+        }
+
         const allProducts = baseProducts.map(product => {
             // Use explicit mainCategory and flowerType from baseProducts
             const flowerType = product.flowerType;
@@ -1755,7 +2025,7 @@
                 ...product,
                 mainCategory,
                 flowerType,
-                description: buildDescription(product, mainCategory, flowerType)
+                description: product.description || buildDescription(product, mainCategory, flowerType)
             };
         });
 
@@ -2057,7 +2327,7 @@
                 <ul>
                     <li>Bouquets</li>
                     <li>Arrangements</li>
-                    <li>Gift Sets</li>
+                    box_options_note: 'Light Color Flowers',
                     <li>Seasonal Blooms</li>
                     <li>Custom Orders</li>
                 </ul>
@@ -2103,7 +2373,7 @@
         var drawer  = document.getElementById('kresDrawer');
         var overlay = document.getElementById('kresOverlay');
         var closeBtn= document.getElementById('kresDrawerClose');
-        if(!btn||!drawer) return;
+                box_options_note: 'Solid Colors',
 
         function open(){
             btn.classList.add('open');
